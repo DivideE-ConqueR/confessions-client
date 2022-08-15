@@ -1,7 +1,6 @@
 export default function Feed() {
   return (
     <div className="p-4 bg-slate-400/10">
-      Feed
       <h1 className="text-9xl text-indigo-700">hello world</h1>
       <h1>g</h1>
       <h1>g</h1>
