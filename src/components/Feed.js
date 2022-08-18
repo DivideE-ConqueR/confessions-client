@@ -1,69 +1,11 @@
+import Card from "./Card";
+
 export default function Feed() {
   return (
-    <div className="p-4 bg-slate-400/10">
-      <h1 className="text-9xl text-indigo-700">hello world</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
-      <h1>g</h1>
+    <div className="p-4 bg-slate-400/20 flex flex-col space-y-4">
+      <Card />
+      <Card />
+      <Card />
     </div>
   );
 }
