@@ -3,15 +3,20 @@ import { RWebShare } from "react-web-share";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
+  HandThumbDownIcon,
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Card() {
   const [likesCount, setLikesCount] = useState(0);
+  const [dislikesCount, setDislikesCount] = useState(0);
 
   const increment = () => {
     setLikesCount(likesCount + 1);
+  };
+  const decrement = () => {
+    setDislikesCount(dislikesCount + 1);
   };
 
   return (
@@ -56,6 +61,15 @@ export default function Card() {
             />
             <span className="select-none">
               {likesCount !== 0 && likesCount}
+            </span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <HandThumbDownIcon
+              className="w-5 cursor-pointer"
+              onClick={decrement}
+            />
+            <span className="select-none">
+              {dislikesCount !== 0 && dislikesCount}
             </span>
           </div>
           <ChatBubbleOvalLeftEllipsisIcon className="w-5 cursor-pointer" />
