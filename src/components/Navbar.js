@@ -3,7 +3,7 @@ import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function Navbar() {
   return (
-    <div className="sticky top-0 p-4 flex justify-between items-center bg-white">
+    <nav className="sticky top-0 p-4 flex justify-between items-center bg-white/50 backdrop-blur">
       <Link to="/">
         <p className="text-2xl font-dynaPuff font-medium select-none">
           Confessions
@@ -17,6 +17,6 @@ export default function Navbar() {
           <MagnifyingGlassIcon className="w-6 h-6" />
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
