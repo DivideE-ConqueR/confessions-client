@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { WithContext as ReactTags } from "react-tag-input";
+import { Snackbar, Alert as MuiAlert } from "@mui/material";
 import axios from "../api/base";
 import Navbar from "../components/Navbar";
 
@@ -8,8 +9,11 @@ const KeyCodes = {
   comma: 188,
   enter: 13,
 };
-
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function New() {
   const navigate = useNavigate();
@@ -21,6 +25,27 @@ export default function New() {
     { id: "Vietnam", text: "Vietnam" },
     { id: "Turkey", text: "Turkey" },
   ]);
+  const [alertState, setAlertState] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
+
+  const handleAlertOpen = (props) => {
+    setAlertState({
+      open: true,
+      message: props.message,
+      severity: props.severity,
+    });
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertState({ open: false, message: "", severity: "" });
+    navigate("/");
+  };
 
   const handleClick = async () => {
     const IPAddress = await axios
@@ -28,15 +53,33 @@ export default function New() {
         `https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_API_KEY}`
       )
       .then((response) => response.data.IPv4)
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        handleAlertOpen({
+          message: "Something went wrong!",
+          severity: "error",
+        });
+        console.log(err);
+      });
+
     await axios
       .post("/posts", {
         postBody: postBody,
         IPAddress: IPAddress,
       })
-      .then(() => console.log("posted"))
-      .catch((err) => console.log(err));
-    navigate("/");
+      .then(() => {
+        handleAlertOpen({
+          message: "Post created successfully!",
+          severity: "success",
+        });
+        console.log("posted");
+      })
+      .catch((err) => {
+        handleAlertOpen({
+          message: "Something went wrong!",
+          severity: "error",
+        });
+        console.log(err);
+      });
   };
 
   const handleDelete = (i) => {
@@ -81,6 +124,20 @@ export default function New() {
         >
           Post
         </button>
+        <Snackbar
+          open={alertState.open}
+          autoHideDuration={3000}
+          onClose={handleAlertClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={handleAlertClose}
+            severity={alertState.severity}
+            sx={{ width: "100%" }}
+          >
+            {alertState.message}
+          </Alert>
+        </Snackbar>
       </div>
     </>
   );
