@@ -25,7 +25,7 @@ export default function New() {
   const handleClick = async () => {
     const IPAddress = await axios
       .get(
-        "https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708"
+        `https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_API_KEY}`
       )
       .then((response) => response.data.IPv4)
       .catch((err) => console.log(err));
