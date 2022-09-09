@@ -7,10 +7,14 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
+import ReactTimeAgo from "react-time-ago";
+import { AvatarGenerator } from "random-avatar-generator";
 
-export default function Card() {
-  const [likesCount, setLikesCount] = useState(0);
-  const [dislikesCount, setDislikesCount] = useState(0);
+export default function Card(props) {
+  const [likesCount, setLikesCount] = useState(props.likes);
+  const [dislikesCount, setDislikesCount] = useState(props.dislikes);
+
+  const generator = new AvatarGenerator();
 
   const increment = () => {
     setLikesCount(likesCount + 1);
@@ -27,20 +31,23 @@ export default function Card() {
             <div className="flex items-center space-x-2">
               <img
                 className="w-8"
-                src="https://avataaars.io/?accessoriesType=Prescription02&avatarStyle=Circle&clotheColor=Heather&clotheType=GraphicShirt&eyeType=Cry&eyebrowType=UpDownNatural&facialHairColor=Brown&facialHairType=BeardMagestic&hairColor=PastelPink&hatColor=Blue02&mouthType=Grimace&skinColor=Tanned&topType=LongHairStraightStrand"
+                src={generator.generateRandomAvatar(props.name)}
+                loading="lazy"
                 alt="avatar"
               />
-              <h2 className="font-semibold text-base">High Christye</h2>
+              <h2 className="font-semibold text-base">{props.name}</h2>
               <p className="font-bold text-gray-300">·</p>
-              <p className="text-gray-400/70">4m</p>
+              <p className="text-gray-400/70">
+                <ReactTimeAgo
+                  date={props.createdAt}
+                  locale="en-IN"
+                  timeStyle="mini-minute-now"
+                />
+              </p>
             </div>
             <EllipsisHorizontalIcon className="w-6 text-gray-500" />
           </div>
-          <p className="text-gray-600 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatibus quia, nulla! Maiores et perferendis eaque,
-            exercitationem praesentium nihil.
-          </p>
+          <p className="text-gray-600 text-base">{props.postBody}</p>
         </div>
         <div className="px-6 pt-4 pb-2">
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
