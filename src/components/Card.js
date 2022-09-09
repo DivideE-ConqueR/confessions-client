@@ -32,6 +32,7 @@ export default function Card(props) {
               <img
                 className="w-8"
                 src={generator.generateRandomAvatar(props.name)}
+                loading="lazy"
                 alt="avatar"
               />
               <h2 className="font-semibold text-base">{props.name}</h2>
