@@ -1,27 +1,26 @@
-// import { TagPicker } from "rsuite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { WithContext as ReactTags } from "react-tag-input";
 import axios from "../api/base";
 import Navbar from "../components/Navbar";
 
+const KeyCodes = {
+  comma: 188,
+  enter: 13,
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
 export default function New() {
-  // const data = [
-  //   "Eugenia",
-  //   "Bryan",
-  //   "Linda",
-  //   "Nancy",
-  //   "Lloyd",
-  //   "Alice",
-  //   "Julia",
-  //   "Albert",
-  // ].map((item) => ({
-  //   label: item,
-  //   value: item,
-  //   role: Math.random() > 0.5 ? "Owner" : "Guest",
-  // }));
   const navigate = useNavigate();
 
   const [postBody, setPostBody] = useState("");
+  const [tags, setTags] = useState([
+    { id: "Thailand", text: "Thailand" },
+    { id: "India", text: "India" },
+    { id: "Vietnam", text: "Vietnam" },
+    { id: "Turkey", text: "Turkey" },
+  ]);
 
   const handleClick = async () => {
     const IPAddress = await axios
@@ -40,6 +39,14 @@ export default function New() {
     navigate("/");
   };
 
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = (tag) => {
+    setTags([...tags, tag]);
+  };
+
   return (
     <>
       <Navbar />
@@ -56,17 +63,18 @@ export default function New() {
           className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Your message..."
         />
-        {/* <div>
-          <TagPicker
-            creatable
-            data={data}
-            style={{ width: 300 }}
-            menuStyle={{ width: 300 }}
-            onCreate={(value, item) => {
-              console.log(value, item);
-            }}
-          />
-        </div> */}
+
+        <ReactTags
+          tags={tags}
+          // suggestions={suggestions}
+          delimiters={delimiters}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          // handleDrag={handleDrag}
+          // handleTagClick={handleTagClick}
+          inputFieldPosition="bottom"
+          // autocomplete
+        />
         <button
           onClick={handleClick}
           className="w-full p-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg"
