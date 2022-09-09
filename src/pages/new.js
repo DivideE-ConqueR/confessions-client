@@ -24,9 +24,16 @@ export default function New() {
   const [postBody, setPostBody] = useState("");
 
   const handleClick = async () => {
+    const IPAddress = await axios
+      .get(
+        "https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708"
+      )
+      .then((response) => response.data.IPv4)
+      .catch((err) => console.log(err));
     await axios
       .post("/posts", {
         postBody: postBody,
+        IPAddress: IPAddress,
       })
       .then(() => console.log("posted"))
       .catch((err) => console.log(err));
