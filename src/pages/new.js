@@ -1,15 +1,8 @@
 import { useState, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { WithContext as ReactTags } from "react-tag-input";
 import { Snackbar, Alert as MuiAlert } from "@mui/material";
 import axios from "../api/base";
 import Navbar from "../components/Navbar";
-
-const KeyCodes = {
-  comma: 188,
-  enter: 13,
-};
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -19,12 +12,6 @@ export default function New() {
   const navigate = useNavigate();
 
   const [postBody, setPostBody] = useState("");
-  const [tags, setTags] = useState([
-    { id: "Thailand", text: "Thailand" },
-    { id: "India", text: "India" },
-    { id: "Vietnam", text: "Vietnam" },
-    { id: "Turkey", text: "Turkey" },
-  ]);
   const [alertState, setAlertState] = useState({
     open: false,
     message: "",
@@ -64,6 +51,7 @@ export default function New() {
     await axios
       .post("/posts", {
         postBody: postBody,
+        postTags: [...new Set(postBody.match(/(#+[a-zA-Z0-9(_)]{1,})/gi))],
         IPAddress: IPAddress,
       })
       .then(() => {
@@ -82,14 +70,6 @@ export default function New() {
       });
   };
 
-  const handleDelete = (i) => {
-    setTags(tags.filter((tag, index) => index !== i));
-  };
-
-  const handleAddition = (tag) => {
-    setTags([...tags, tag]);
-  };
-
   return (
     <>
       <Navbar />
@@ -103,20 +83,8 @@ export default function New() {
           rows="10"
           value={postBody}
           onChange={(e) => setPostBody(e.target.value)}
-          className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-blue-500 focus:outline-none"
           placeholder="Your message..."
-        />
-
-        <ReactTags
-          tags={tags}
-          // suggestions={suggestions}
-          delimiters={delimiters}
-          handleDelete={handleDelete}
-          handleAddition={handleAddition}
-          // handleDrag={handleDrag}
-          // handleTagClick={handleTagClick}
-          inputFieldPosition="bottom"
-          // autocomplete
         />
         <button
           onClick={handleClick}
