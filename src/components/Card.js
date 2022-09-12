@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RWebShare } from "react-web-share";
+import ReactHashtag from "react-hashtag";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
@@ -47,19 +48,17 @@ export default function Card(props) {
             </div>
             <EllipsisHorizontalIcon className="w-6 text-gray-500" />
           </div>
-          <p className="text-gray-600 text-base">{props.postBody}</p>
+          <p className="text-gray-600 text-base whitespace-pre-line">
+            <ReactHashtag
+              renderHashtag={(hashtagValue) => (
+                <span className="text-blue-500 ">{hashtagValue}</span>
+              )}
+            >
+              {props.postBody}
+            </ReactHashtag>
+          </p>
         </div>
-        <div className="px-6 pt-4 pb-2">
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #photography
-          </span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #travel
-          </span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            #winter
-          </span>
-        </div>
+
         <div className="px-6 pt-3 pb-4 flex space-x-8 items-center">
           <div className="flex items-center space-x-2">
             <HandThumbUpIcon

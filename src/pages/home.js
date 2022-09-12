@@ -5,7 +5,7 @@ import Card from "../components/Card";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  
+
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get("/posts").then((res) => res.data);
