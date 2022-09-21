@@ -27,43 +27,41 @@ export default function Post() {
   return (
     <>
       <Navbar />
-      <>
-        {loading ? (
-          <p>Loading</p>
-        ) : (
-          <div className="px-6 py-4">
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center space-x-2">
-                <img
-                  className="w-8"
-                  src={generator.generateRandomAvatar(post.name)}
-                  loading="lazy"
-                  alt="avatar"
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="px-6 py-4">
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center space-x-2">
+              <img
+                className="w-8"
+                src={generator.generateRandomAvatar(post?.name)}
+                loading="lazy"
+                alt="avatar"
+              />
+              <h2 className="font-semibold text-base">{post?.name}</h2>
+              <p className="font-bold text-gray-300">·</p>
+              <p className="text-gray-400/70">
+                <ReactTimeAgo
+                  date={new Date(post?.createdAt).getTime()}
+                  locale="en-IN"
+                  timeStyle="mini-minute-now"
                 />
-                <h2 className="font-semibold text-base">{post.name}</h2>
-                <p className="font-bold text-gray-300">·</p>
-                <p className="text-gray-400/70">
-                  <ReactTimeAgo
-                    date={new Date(post.createdAt).getTime()}
-                    locale="en-IN"
-                    timeStyle="mini-minute-now"
-                  />
-                </p>
-              </div>
-              <EllipsisHorizontalIcon className="w-6 text-gray-500" />
+              </p>
             </div>
-            <p className="text-gray-600 text-base whitespace-pre-line">
-              <ReactHashtag
-                renderHashtag={(hashtagValue) => (
-                  <span className="text-blue-500 ">{hashtagValue}</span>
-                )}
-              >
-                {post.postBody}
-              </ReactHashtag>
-            </p>
+            <EllipsisHorizontalIcon className="w-6 text-gray-500" />
           </div>
-        )}
-      </>
+          <p className="text-gray-600 text-base whitespace-pre-line">
+            <ReactHashtag
+              renderHashtag={(hashtagValue) => (
+                <span className="text-blue-500 ">{hashtagValue}</span>
+              )}
+            >
+              {post?.postBody}
+            </ReactHashtag>
+          </p>
+        </div>
+      )}
     </>
   );
 }

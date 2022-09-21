@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { RWebShare } from "react-web-share";
 import ReactHashtag from "react-hashtag";
+import ReactTimeAgo from "react-time-ago";
+import { AvatarGenerator } from "random-avatar-generator";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
@@ -8,10 +11,10 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import ReactTimeAgo from "react-time-ago";
-import { AvatarGenerator } from "random-avatar-generator";
 
 export default function Card(props) {
+  const navigate = useNavigate();
+
   const [likesCount, setLikesCount] = useState(props.likes);
   const [dislikesCount, setDislikesCount] = useState(props.dislikes);
 
@@ -78,7 +81,12 @@ export default function Card(props) {
               {dislikesCount !== 0 && dislikesCount}
             </span>
           </div>
-          <ChatBubbleOvalLeftEllipsisIcon className="w-5 cursor-pointer" />
+          <ChatBubbleOvalLeftEllipsisIcon
+            className="w-5 cursor-pointer"
+            onClick={() => {
+              navigate(`/posts/${props.id}`);
+            }}
+          />
           <RWebShare
             data={{
               text: "Web Share - Confessions",
