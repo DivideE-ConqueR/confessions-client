@@ -4205,6 +4205,11 @@ eslint-plugin-react@^7.27.1:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.7"
 
+eslint-plugin-simple-import-sort@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-8.0.0.tgz#9d9a2372b0606e999ea841b10458a370a6ccc160"
+  integrity sha512-bXgJQ+lqhtQBCuWY/FUWdB27j4+lqcvXv5rUARkzbeWLwea+S5eBZEQrhnO+WgX3ZoJHVj0cn943iyXwByHHQw==
+
 eslint-plugin-testing-library@^5.0.1:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-5.6.0.tgz#91e810ecb838f86decc9b5202876c87e42d73ea7"
@@ -7629,10 +7634,12 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-web-share@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/react-web-share/-/react-web-share-1.1.6.tgz#ac99ebe2bc5e291bb3af2d5ffcf533fcbede8aba"
-  integrity sha512-IttmjG4DlIPEWNnS3RBccaPo6zFs2DNYk+92YjW1iPp0L9h0hXCaellxIQx8xhLepLFoiVjOMM/MNbLSZUzzsw==
+react-web-share@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-web-share/-/react-web-share-2.0.0.tgz#5c3cf51b5fbe87704de379f87c25af8a195e7d45"
+  integrity sha512-FCjyasCQbP0fPlMTSI68QzShXsohoPeVD7NMMu0T8wTjIZ9EZNCX7oUkimwcWAAhEExLiL5NblgJ250QD9FqAQ==
+  dependencies:
+    eslint-plugin-simple-import-sort "^8.0.0"
 
 react@^18.2.0:
   version "18.2.0"
