@@ -6,7 +6,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@heroicons/react": "^2.0.8",
-    "@mui/material": "^5.10.4",
+    "@mui/material": "^5.10.6",
     "axios": "^0.27.2",
     "javascript-time-ago": "^2.5.7",
     "random-avatar-generator": "^2.0.0",
