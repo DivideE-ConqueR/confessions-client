@@ -27,7 +27,6 @@ export default function Post() {
 
   useEffect(() => {
     async function getPost() {
-      // const response = await axios.get(`/posts/${id}`).then((res) => res.data);
       const [postResponse, commentResponse] = await Promise.all([
         axios.get(`/posts/${id}`).then((res) => res.data),
         axios.get(`/comments/${id}`).then((res) => res.data),
