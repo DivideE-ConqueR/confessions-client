@@ -116,8 +116,8 @@ export default function Post() {
             <ChatBubbleOvalLeftEllipsisIcon className="w-5 cursor-pointer" />
             <RWebShare
               data={{
-                text: "Web Share - Confessions",
-                url: "http://localhost:3000",
+                text: `Share - Confessions | ${post.name}`,
+                url: `/posts/${post.postId}`,
                 title: "Confessions",
               }}
               onClick={() => console.log("shared successfully!")}
