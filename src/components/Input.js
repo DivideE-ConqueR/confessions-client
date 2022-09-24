@@ -12,7 +12,7 @@ export default function Input({ placeholder, value, onChange, onClick, rows }) {
       />
       <button
         disabled={value.length === 0 ? true : false}
-        onClick={value.length > 0 ? onClick : null}
+        onClick={onClick}
         className="w-full p-2.5 text-sm font-medium rounded-lg text-white bg-gray-800 hover:bg-gray-600 focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
         Post
