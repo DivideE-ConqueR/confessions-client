@@ -14,16 +14,17 @@ import ReactHashtag from "react-hashtag";
 import { RWebShare } from "react-web-share";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
+import Input from "../components/Input";
 
 export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
 
-  const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
-  const [commentBody, setCommentBody] = useState("");
+  const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
+  const [commentBody, setCommentBody] = useState("");
 
   useEffect(() => {
     async function getPost() {
@@ -125,22 +126,14 @@ export default function Post() {
               <ShareIcon className="w-5 cursor-pointer" />
             </RWebShare>
           </div>
-          <div className="mb-6 px-3 py-3">
-            <textarea
-              type="textarea"
-              rows="3"
-              id="large-input"
+          <div className="mb-6 px-3 py-3 space-y-4">
+            <Input
               value={commentBody}
-              onChange={(e) => setCommentBody(e.target.value)}
-              className="p-2.5 w-full text-sm bg-gray-50 rounded-2xl border-2 border-gray-300 focus:ring focus:ring-green-500 focus:outline-none"
-              placeholder="Write your comment..."
-            />
-            <button
+              onChange={setCommentBody}
               onClick={handleClick}
-              className="w-full p-2.5 text-sm font-medium rounded-2xl text-white bg-green-500 "
-            >
-              Submit
-            </button>
+              placeholder="Write your comment..."
+              rows={3}
+            />
           </div>
           <div className="px-6 pt-4 flex flex-col space-y-3">
             {comments.map((comment) => (

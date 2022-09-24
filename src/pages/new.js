@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Snackbar, Alert as MuiAlert } from "@mui/material";
 import axios from "../api/base";
 import Navbar from "../components/Navbar";
+import Input from "../components/Input";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -78,20 +79,13 @@ export default function New() {
         <h1 className="font-medium text-center">
           Share your secret with the world
         </h1>
-        <textarea
-          id="message"
-          rows="10"
+        <Input
           value={postBody}
-          onChange={(e) => setPostBody(e.target.value)}
-          className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-blue-500 focus:outline-none"
-          placeholder="Your message..."
-        />
-        <button
+          onChange={setPostBody}
           onClick={handleClick}
-          className="w-full p-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg"
-        >
-          Post
-        </button>
+          placeholder="Your message..."
+          rows="10"
+        />
         <Snackbar
           open={alertState.open}
           autoHideDuration={3000}
