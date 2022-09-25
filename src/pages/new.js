@@ -82,13 +82,14 @@ export default function New() {
           placeholder="Your message..."
           rows="10"
         />
-        <CustomAlert
-          open={alertState.open}
-          handleClose={handleAlertClose}
-          severity={alertState.severity}
-          message={alertState.message}
-        />
       </div>
+
+      <CustomAlert
+        open={alertState.open}
+        handleClose={handleAlertClose}
+        severity={alertState.severity}
+        message={alertState.message}
+      />
     </>
   );
 }
