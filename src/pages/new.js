@@ -1,13 +1,9 @@
-import { useState, forwardRef } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Snackbar, Alert as MuiAlert } from "@mui/material";
 import axios from "../api/base";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
-
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import CustomAlert from "../components/CustomAlert";
 
 export default function New() {
   const navigate = useNavigate();
@@ -86,20 +82,12 @@ export default function New() {
           placeholder="Your message..."
           rows="10"
         />
-        <Snackbar
+        <CustomAlert
           open={alertState.open}
-          autoHideDuration={3000}
-          onClose={handleAlertClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        >
-          <Alert
-            onClose={handleAlertClose}
-            severity={alertState.severity}
-            sx={{ width: "100%" }}
-          >
-            {alertState.message}
-          </Alert>
-        </Snackbar>
+          handleClose={handleAlertClose}
+          severity={alertState.severity}
+          message={alertState.message}
+        />
       </div>
     </>
   );
