@@ -1,4 +1,19 @@
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
+
 export default function Input({ placeholder, value, onChange, onClick, rows }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleOnClick = () => {
+    setLoading(true);
+    const timeOut = setTimeout(() => {
+      onClick();
+      onChange("");
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timeOut);
+  };
+
   return (
     <>
       <textarea
@@ -11,11 +26,11 @@ export default function Input({ placeholder, value, onChange, onClick, rows }) {
         placeholder={placeholder}
       />
       <button
-        disabled={value.length === 0 ? true : false}
-        onClick={onClick}
+        disabled={value.length === 0 && !loading ? true : false}
+        onClick={handleOnClick}
         className="w-full p-2.5 text-sm font-medium rounded-lg text-white bg-gray-800 hover:bg-gray-600 focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        Post
+        {loading ? <CircularProgress size={23} /> : "Post"}
       </button>
     </>
   );
