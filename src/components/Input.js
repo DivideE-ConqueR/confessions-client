@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CircularProgress } from "@mui/material";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Input({ placeholder, value, onChange, onClick, rows }) {
   const [loading, setLoading] = useState(false);
@@ -22,15 +22,30 @@ export default function Input({ placeholder, value, onChange, onClick, rows }) {
         id="large-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-gray-600 focus:outline-none"
+        className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-[#1856AD] focus:outline-none"
         placeholder={placeholder}
       />
       <button
         disabled={value.length === 0 && !loading ? true : false}
         onClick={handleOnClick}
-        className="w-full p-2.5 text-sm font-medium rounded-lg text-white bg-gray-800 hover:bg-gray-600 focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="w-full h-12 p-2.5 text-sm font-medium rounded-lg text-white bg-[#1856AD] hover:bg-[#0F3460] focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-[#97D2EC] disabled:cursor-not-allowed"
       >
-        {loading ? <CircularProgress size={23} /> : "Post"}
+        {loading ? (
+          <span className="flex justify-center">
+            <ThreeDots
+              height="30"
+              width="30"
+              radius="9"
+              color="#fff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </span>
+        ) : (
+          "Post"
+        )}
       </button>
     </>
   );

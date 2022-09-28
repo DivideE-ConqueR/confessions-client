@@ -131,16 +131,17 @@ export default function Post() {
               value={commentBody}
               onChange={setCommentBody}
               onClick={handleClick}
-              placeholder="Write your comment..."
+              placeholder="Add your comment..."
               rows={3}
             />
           </div>
-          <div className="px-6 pt-4 flex flex-col space-y-3">
+          <div className="px-6 pt-4 flex flex-col space-y-3 divide-y-2">
             {comments.map((comment) => (
               <Comment
                 key={comment._id}
                 comment={comment.comment}
                 name={comment.name}
+                createdAt={comment.createdAt}
               />
             ))}
           </div>
