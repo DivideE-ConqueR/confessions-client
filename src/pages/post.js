@@ -9,6 +9,7 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import ReactTimeAgo from "react-time-ago";
 import ReactHashtag from "react-hashtag";
 import { RWebShare } from "react-web-share";
@@ -139,14 +140,24 @@ export default function Post() {
             data-before-content="All Comments"
             className="p-6 flex flex-col space-y-3 divide-y-2 before:content-[attr(data-before-content)] before:text-lg before:font-semibold before:mb-2 before:pb-2 before:border-b-2 before:border-gray-300"
           >
-            {comments.map((comment) => (
-              <Comment
-                key={comment._id}
-                comment={comment.comment}
-                name={comment.name}
-                createdAt={comment.createdAt}
-              />
-            ))}
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  comment={comment.comment}
+                  name={comment.name}
+                  createdAt={comment.createdAt}
+                />
+              ))
+            ) : (
+              <div className="h-40 flex flex-col items-center justify-center space-y-4">
+                <ChatBubbleLeftRightIcon className="w-8 text-red-400" />
+                <p className="font-[500] text-gray-700">No Comments Yet!</p>
+                <p className="text-gray-600">
+                  Be the first to share what you think!
+                </p>
+              </div>
+            )}
           </div>
         </>
       )}
