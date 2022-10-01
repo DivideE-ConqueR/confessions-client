@@ -135,7 +135,10 @@ export default function Post() {
               rows={3}
             />
           </div>
-          <div className="px-6 pt-4 flex flex-col space-y-3 divide-y-2">
+          <div
+            data-before-content="All Comments"
+            className="px-6 pt-4 flex flex-col space-y-3 divide-y-2 before:content-[attr(data-before-content)] before:text-lg before:font-semibold before:mb-2 before:pb-2 before:border-b-2 before:border-gray-300"
+          >
             {comments.map((comment) => (
               <Comment
                 key={comment._id}
