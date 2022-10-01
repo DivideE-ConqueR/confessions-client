@@ -5,14 +5,14 @@ export default function Comment(props) {
   const generator = new AvatarGenerator();
 
   return (
-    <div className="pt-4 pb-2 flex space-x-4">
+    <div className="pt-4 pb-2 flex space-x-4 items-start">
       <img
         className="h-10 w-10"
         src={generator.generateRandomAvatar(props.name)}
         loading="lazy"
         alt="avatar"
       />
-      <div>
+      <div className="space-y-2">
         <div className="flex space-x-2">
           <p
             data-after-content="·"
