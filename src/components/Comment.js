@@ -16,7 +16,7 @@ export default function Comment(props) {
         <div className="flex space-x-2">
           <p
             data-after-content="·"
-            className="font-semibold text-base after:content-[attr(data-after-content)] after:font-bold after:text-gray-300 after:ml-2"
+            className="font-semibold text-base seperator"
           >
             {props.name}
           </p>

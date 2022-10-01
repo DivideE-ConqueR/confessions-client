@@ -7,3 +7,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@layer components {
+  .seperator {
+    @apply after:content-[attr(data-after-content)] after:font-bold after:text-gray-300 after:ml-2;
+  }
+}
