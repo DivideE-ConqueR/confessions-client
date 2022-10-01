@@ -126,7 +126,7 @@ export default function Post() {
               <ShareIcon className="w-5 cursor-pointer" />
             </RWebShare>
           </div>
-          <div className="mb-6 px-3 py-3 space-y-4">
+          <div className="p-3 mb-2 space-y-4">
             <Input
               value={commentBody}
               onChange={setCommentBody}
@@ -137,7 +137,7 @@ export default function Post() {
           </div>
           <div
             data-before-content="All Comments"
-            className="px-6 pt-4 flex flex-col space-y-3 divide-y-2 before:content-[attr(data-before-content)] before:text-lg before:font-semibold before:mb-2 before:pb-2 before:border-b-2 before:border-gray-300"
+            className="p-6 flex flex-col space-y-3 divide-y-2 before:content-[attr(data-before-content)] before:text-lg before:font-semibold before:mb-2 before:pb-2 before:border-b-2 before:border-gray-300"
           >
             {comments.map((comment) => (
               <Comment
