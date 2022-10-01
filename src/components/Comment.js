@@ -5,28 +5,30 @@ export default function Comment(props) {
   const generator = new AvatarGenerator();
 
   return (
-    <div className="p-4 flex space-x-4">
-      <div>
-        <img
-          className="h-10 w-10"
-          src={generator.generateRandomAvatar(props.name)}
-          loading="lazy"
-          alt="avatar"
-        />
-      </div>
+    <div className="pt-4 pb-2 flex space-x-4">
+      <img
+        className="h-10 w-10"
+        src={generator.generateRandomAvatar(props.name)}
+        loading="lazy"
+        alt="avatar"
+      />
       <div>
         <div className="flex space-x-2">
-          <p className="font-semibold text-base">{props.name}</p>
-          <p className="font-bold text-gray-300">·</p>
+          <p
+            data-after-content="·"
+            className="font-semibold text-base after:content-[attr(data-after-content)] after:font-bold after:text-gray-300 after:ml-2"
+          >
+            {props.name}
+          </p>
           <p className="text-gray-400/70">
             <ReactTimeAgo
-              date={props.createdAt}
+              date={new Date(props.createdAt).getTime()}
               locale="en-IN"
               timeStyle="mini-minute-now"
             />
           </p>
         </div>
-        <p className="whitespace-pre-wrap">{props.comment}</p>
+        <p className="whitespace-pre-wrap break-words">{props.comment}</p>
       </div>
     </div>
   );
