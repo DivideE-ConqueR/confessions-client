@@ -93,7 +93,7 @@ export default function Post() {
               </div>
               <EllipsisHorizontalIcon className="w-6 text-gray-500" />
             </div>
-            <p className="text-gray-600 text-base whitespace-pre-line">
+            <p className="text-gray-600 text-base whitespace-pre-line break-words">
               <ReactHashtag
                 renderHashtag={(hashtagValue) => (
                   <span className="text-blue-500">{hashtagValue}</span>
