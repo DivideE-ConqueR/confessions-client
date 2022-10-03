@@ -9,6 +9,8 @@ export default function Comment(props) {
       <img
         className="h-10 w-10"
         src={generator.generateRandomAvatar(props.name)}
+        width="2.5rem"
+        height="2.5rem"
         loading="lazy"
         alt="avatar"
       />
