@@ -30,7 +30,9 @@ export default function Comment(props) {
             />
           </p>
         </div>
-        <p className="whitespace-pre-wrap break-words">{props.comment}</p>
+        <p className="w-[75vw] whitespace-pre-wrap break-words">
+          {props.comment}
+        </p>
       </div>
     </div>
   );
