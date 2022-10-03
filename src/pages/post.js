@@ -10,6 +10,7 @@ import {
   ShareIcon,
 } from "@heroicons/react/24/outline";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { CircularProgress } from "@mui/material";
 import ReactTimeAgo from "react-time-ago";
 import ReactHashtag from "react-hashtag";
 import { RWebShare } from "react-web-share";
@@ -66,7 +67,9 @@ export default function Post() {
     <>
       <Navbar />
       {loading ? (
-        <p>Loading...</p>
+        <div className="h-[85vh] grid place-items-center">
+          <CircularProgress />
+        </div>
       ) : (
         <>
           <div className="px-6 py-4">
