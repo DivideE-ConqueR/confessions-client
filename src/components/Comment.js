@@ -16,12 +16,12 @@ export default function Comment(props) {
       />
       <div className="space-y-2">
         <div className="flex space-x-2">
-          <p
+          <h2
             data-after-content="·"
-            className="font-semibold text-base seperator"
+            className="font-semibold text-base dot__seperator"
           >
             {props.name}
-          </p>
+          </h2>
           <p className="text-gray-400/70">
             <ReactTimeAgo
               date={new Date(props.createdAt).getTime()}

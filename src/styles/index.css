@@ -9,7 +9,7 @@ body {
 }
 
 @layer components {
-  .seperator {
+  .dot__seperator {
     @apply after:content-[attr(data-after-content)] after:font-bold after:text-gray-300 after:ml-2;
   }
 }
