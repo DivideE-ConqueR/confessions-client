@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (min-width: 640px) {
+  body {
+    max-width: 50%;
+    margin: 0 auto;
+  }
 }
 
 @layer components {
