@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AvatarGenerator } from "random-avatar-generator";
 import axios from "../api/base";
 import {
@@ -22,6 +22,7 @@ export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
@@ -53,6 +54,7 @@ export default function Post() {
         //   severity: "success",
         // });
         console.log("commented");
+        navigate(0);
       })
       .catch((err) => {
         // handleAlertOpen({
