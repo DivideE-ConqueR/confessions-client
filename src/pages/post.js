@@ -76,7 +76,9 @@ export default function Post() {
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center space-x-2">
                 <img
-                  className="w-8"
+                  className="w-8 h-8"
+                  width="2rem"
+                  height="2rem"
                   src={generator.generateRandomAvatar(post.name)}
                   loading="lazy"
                   alt="avatar"
@@ -93,7 +95,7 @@ export default function Post() {
               </div>
               <EllipsisHorizontalIcon className="w-6 text-gray-500" />
             </div>
-            <p className="text-gray-600 text-base whitespace-pre-line break-words">
+            <p className="text-gray-600 text-xl whitespace-pre-line break-words">
               <ReactHashtag
                 renderHashtag={(hashtagValue) => (
                   <span className="text-blue-500">{hashtagValue}</span>
@@ -103,7 +105,7 @@ export default function Post() {
               </ReactHashtag>
             </p>
           </div>
-          <div className="px-6 pt-3 pb-4 flex space-x-8 items-center">
+          <div className="px-6 pt-3 pb-4 flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <HandThumbUpIcon
                 className="w-5 cursor-pointer"
