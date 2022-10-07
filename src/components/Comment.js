@@ -1,4 +1,5 @@
 import { AvatarGenerator } from "random-avatar-generator";
+import ReactHashtag from "react-hashtag";
 import ReactTimeAgo from "react-time-ago";
 
 export default function Comment(props) {
@@ -31,7 +32,13 @@ export default function Comment(props) {
           </p>
         </div>
         <p className="w-[75vw] whitespace-pre-wrap break-words">
-          {props.comment}
+          <ReactHashtag
+            renderHashtag={(hashtagValue) => (
+              <span className="text-blue-500">{hashtagValue}</span>
+            )}
+          >
+            {props.comment}
+          </ReactHashtag>
         </p>
       </div>
     </div>
