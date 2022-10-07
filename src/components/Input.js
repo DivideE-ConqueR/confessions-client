@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function Input({ placeholder, value, onChange, onClick, rows }) {
+export default function Input({
+  label,
+  placeholder,
+  value,
+  onChange,
+  onClick,
+  rows,
+}) {
   const [loading, setLoading] = useState(false);
 
   const handleOnClick = () => {
@@ -44,7 +51,7 @@ export default function Input({ placeholder, value, onChange, onClick, rows }) {
             />
           </span>
         ) : (
-          "Post"
+          label
         )}
       </button>
     </>

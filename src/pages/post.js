@@ -139,6 +139,7 @@ export default function Post() {
               value={commentBody}
               onChange={setCommentBody}
               onClick={handleClick}
+              label="Comment"
               placeholder="Add your comment..."
               rows={3}
             />

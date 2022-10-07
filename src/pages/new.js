@@ -79,6 +79,7 @@ export default function New() {
           value={postBody}
           onChange={setPostBody}
           onClick={handleClick}
+          label="Post"
           placeholder="Your message..."
           rows="10"
         />
