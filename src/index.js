@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./styles/index.css";
 import App from "./App";
 import JavascriptTimeAgo from "javascript-time-ago";
+import PostProvider from "./context/postContext";
 
 JavascriptTimeAgo.locale(en);
 
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <PostProvider>
+        <App />
+      </PostProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

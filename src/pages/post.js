@@ -17,12 +17,14 @@ import { RWebShare } from "react-web-share";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
 import Input from "../components/Input";
+import { usePost } from "../hooks/usePost";
 
 export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const { likes, addLike } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
@@ -111,7 +113,7 @@ export default function Post() {
             <div className="flex items-center space-x-2">
               <HandThumbUpIcon
                 className="w-5 cursor-pointer"
-                // onClick={increment}
+                onClick={() => addLike(post.postId)}
               />
               <span className="select-none">{post.likes}</span>
             </div>
