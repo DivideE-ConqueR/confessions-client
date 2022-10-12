@@ -10,7 +10,7 @@ export default function PostProvider({ children }) {
     setPostLikesToLS(postLikes);
   }, [postLikes]);
 
-  const addLike = (id) => {
+  const addPostLike = (id) => {
     if (postLikes.findIndex((post) => post.id === id) === -1) {
       const newPostLikes = [...postLikes, { id, liked: true }];
       setPostLikes(newPostLikes);
@@ -18,7 +18,7 @@ export default function PostProvider({ children }) {
   };
 
   return (
-    <PostContext.Provider value={{ postLikes, addLike }}>
+    <PostContext.Provider value={{ postLikes, addPostLike }}>
       {children}
     </PostContext.Provider>
   );
