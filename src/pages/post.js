@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AvatarGenerator } from "random-avatar-generator";
+import ReactTimeAgo from "react-time-ago";
+import ReactHashtag from "react-hashtag";
+import { RWebShare } from "react-web-share";
 import axios from "../api/base";
+import { usePost } from "../hooks/usePost";
+import Navbar from "../components/Navbar";
+import Input from "../components/Input";
+import Comment from "../components/Comment";
+import { CircularProgress } from "@mui/material";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
@@ -10,21 +18,13 @@ import {
   ShareIcon,
 } from "@heroicons/react/24/outline";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { CircularProgress } from "@mui/material";
-import ReactTimeAgo from "react-time-ago";
-import ReactHashtag from "react-hashtag";
-import { RWebShare } from "react-web-share";
-import Navbar from "../components/Navbar";
-import Comment from "../components/Comment";
-import Input from "../components/Input";
-import { usePost } from "../hooks/usePost";
 
 export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const { likes, addLike } = usePost();
+  const { addPostLike } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
@@ -113,7 +113,7 @@ export default function Post() {
             <div className="flex items-center space-x-2">
               <HandThumbUpIcon
                 className="w-5 cursor-pointer"
-                onClick={() => addLike(post.postId)}
+                onClick={() => addPostLike(post.postId)}
               />
               <span className="select-none">{post.likes}</span>
             </div>
