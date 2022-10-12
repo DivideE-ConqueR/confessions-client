@@ -1,7 +1,7 @@
-export function postLikesGetter() {
-  return JSON.parse(localStorage.getItem("postLikes")) || [];
+export function getPostLikesFromLS() {
+  return JSON.parse(window.localStorage.getItem("postLikes")) || [];
 }
 
-export function postLikesSetter(postLikes) {
-  localStorage.setItem("postLikes", JSON.stringify(postLikes));
+export function setPostLikesToLS(postLikes) {
+  window.localStorage.setItem("postLikes", JSON.stringify(postLikes));
 }
