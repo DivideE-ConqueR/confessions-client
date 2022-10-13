@@ -12,13 +12,19 @@ export default function PostProvider({ children }) {
 
   const addPostLike = (id) => {
     if (postLikes.findIndex((post) => post.id === id) === -1) {
-      const newPostLikes = [...postLikes, { id, liked: true }];
+      const newPostLikes = [...postLikes, { id, liked: true, synced: false }];
       setPostLikes(newPostLikes);
+      return true;
     }
+    return false;
+  };
+
+  const isPostLiked = (id) => {
+    return postLikes.find((post) => post.id === id);
   };
 
   return (
-    <PostContext.Provider value={{ postLikes, addPostLike }}>
+    <PostContext.Provider value={{ postLikes, addPostLike, isPostLiked }}>
       {children}
     </PostContext.Provider>
   );

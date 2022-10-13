@@ -17,19 +17,23 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import {
+  ChatBubbleLeftRightIcon,
+  HandThumbUpIcon as HandThumbUpSolidIcon,
+} from "@heroicons/react/24/solid";
 
 export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addPostLike } = usePost();
+  const { addPostLike, isPostLiked } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [commentBody, setCommentBody] = useState("");
+  const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
 
   useEffect(() => {
     async function getPost() {
@@ -39,10 +43,13 @@ export default function Post() {
       ]);
       setPost(postResponse);
       setComments(commentResponse);
+      const likedRes = isPostLiked(id);
+      likedRes &&
+        setPostLiked({ liked: likedRes.liked, synced: likedRes.synced });
       setLoading(false);
     }
     getPost();
-  }, [id]);
+  }, [id, isPostLiked]);
 
   const handleClick = async () => {
     await axios
@@ -65,6 +72,12 @@ export default function Post() {
         // });
         console.log(err);
       });
+  };
+
+  const handlePostLike = () => {
+    if (addPostLike(post.postId)) {
+      setPostLiked({ liked: true, synced: false });
+    }
   };
 
   return (
@@ -110,12 +123,18 @@ export default function Post() {
             </p>
           </div>
           <div className="px-6 pt-3 pb-4 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <HandThumbUpIcon
-                className="w-5 cursor-pointer"
-                onClick={() => addPostLike(post.postId)}
-              />
-              <span className="select-none">{post.likes}</span>
+            <div
+              className="flex items-center space-x-2"
+              onClick={handlePostLike}
+            >
+              {postLiked.liked ? (
+                <HandThumbUpSolidIcon className="w-5 cursor-pointer" />
+              ) : (
+                <HandThumbUpIcon className="w-5 cursor-pointer" />
+              )}
+              <span className="select-none">
+                {postLiked.synced === false ? post.likes + 1 : post.likes}
+              </span>
             </div>
             <div className="flex items-center space-x-2">
               <HandThumbDownIcon
