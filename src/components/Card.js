@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RWebShare } from "react-web-share";
 import ReactHashtag from "react-hashtag";
 import ReactTimeAgo from "react-time-ago";
 import { AvatarGenerator } from "random-avatar-generator";
+import { usePost } from "../hooks/usePost";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
@@ -11,18 +12,31 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
+import { HandThumbUpIcon as HandThumbUpSolidIcon } from "@heroicons/react/24/solid";
 
 export default function Card(props) {
-  const navigate = useNavigate();
-
-  const [likesCount, setLikesCount] = useState(props.likes);
-  const [dislikesCount, setDislikesCount] = useState(props.dislikes);
-
   const generator = new AvatarGenerator();
 
-  const increment = () => {
-    setLikesCount(likesCount + 1);
+  const navigate = useNavigate();
+  const { isPostLiked, addPostLike } = usePost();
+
+  // const [likesCount, setLikesCount] = useState(props.likes);
+  const [dislikesCount, setDislikesCount] = useState(props.dislikes);
+  const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
+
+  useEffect(() => {
+    const likedRes = isPostLiked(props.id);
+    likedRes &&
+      setPostLiked({ liked: likedRes.liked, synced: likedRes.synced });
+  }, [isPostLiked, props.id]);
+
+  const handlePostLike = () => {
+    // setLikesCount(likesCount + 1);
+    if (addPostLike(props.id)) {
+      setPostLiked({ liked: true, synced: false });
+    }
   };
+
   const decrement = () => {
     setDislikesCount(dislikesCount + 1);
   };
@@ -63,13 +77,26 @@ export default function Card(props) {
         </div>
 
         <div className="px-6 pt-3 pb-4 flex space-x-8 items-center">
-          <div className="flex items-center space-x-2">
+          {/* <div className="flex items-center space-x-2">
             <HandThumbUpIcon
               className="w-5 cursor-pointer"
               onClick={increment}
             />
             <span className="select-none">
               {likesCount !== 0 && likesCount}
+            </span>
+          </div> */}
+          <div
+            className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
+            onClick={handlePostLike}
+          >
+            {postLiked.liked ? (
+              <HandThumbUpSolidIcon className="w-5 text-blue-500" />
+            ) : (
+              <HandThumbUpIcon className="w-5" />
+            )}
+            <span className="select-none">
+              {postLiked.synced === false ? props.likes + 1 : props.likes}
             </span>
           </div>
           <div className="flex items-center space-x-2">
