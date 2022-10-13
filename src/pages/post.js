@@ -124,13 +124,13 @@ export default function Post() {
           </div>
           <div className="px-6 pt-3 pb-4 flex justify-between items-center">
             <div
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
               onClick={handlePostLike}
             >
               {postLiked.liked ? (
-                <HandThumbUpSolidIcon className="w-5 cursor-pointer" />
+                <HandThumbUpSolidIcon className="w-5 text-blue-500" />
               ) : (
-                <HandThumbUpIcon className="w-5 cursor-pointer" />
+                <HandThumbUpIcon className="w-5" />
               )}
               <span className="select-none">
                 {postLiked.synced === false ? post.likes + 1 : post.likes}
