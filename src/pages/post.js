@@ -20,6 +20,7 @@ import {
 import {
   ChatBubbleLeftRightIcon,
   HandThumbUpIcon as HandThumbUpSolidIcon,
+  HandThumbDownIcon as HandThumbDownSolidIcon,
 } from "@heroicons/react/24/solid";
 
 export default function Post() {
@@ -27,13 +28,23 @@ export default function Post() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addPostLike, removePostLike, isPostLiked } = usePost();
+  const {
+    addPostLike,
+    removePostLike,
+    isPostLiked,
+    addPostDislike,
+    isPostDisliked,
+  } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [commentBody, setCommentBody] = useState("");
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
+  const [postDisliked, setPostDisliked] = useState({
+    disliked: null,
+    synced: null,
+  });
 
   useEffect(() => {
     async function getPost() {
@@ -44,13 +55,20 @@ export default function Post() {
       setPost(postResponse);
       setComments(commentResponse);
       const likedRes = isPostLiked(id);
+      const dislikedRes = isPostDisliked(id);
       likedRes
         ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
         : setPostLiked({ liked: false, synced: null });
+      dislikedRes
+        ? setPostDisliked({
+            disliked: dislikedRes.disliked,
+            synced: dislikedRes.synced,
+          })
+        : setPostDisliked({ disliked: false, synced: null });
       setLoading(false);
     }
     getPost();
-  }, [id, isPostLiked]);
+  }, [id, isPostLiked, isPostDisliked]);
 
   const handleClick = async () => {
     await axios
@@ -83,6 +101,18 @@ export default function Post() {
       removePostLike(post.postId);
       setPostLiked({ liked: false, synced: null });
     }
+  };
+
+  const handlePostDislike = () => {
+    if (postDisliked.disliked !== true) {
+      addPostDislike(post.postId);
+      setPostDisliked({ disliked: true, synced: false });
+    }
+
+    // else {
+    //   removePostDislike(post.postId);
+    //   setPostDisliked({ disliked: false, synced: null });
+    // }
   };
 
   return (
@@ -141,12 +171,20 @@ export default function Post() {
                 {postLiked.synced === false ? post.likes + 1 : post.likes}
               </span>
             </div>
-            <div className="flex items-center space-x-2">
-              <HandThumbDownIcon
-                className="w-5 cursor-pointer"
-                // onClick={decrement}
-              />
-              <span className="select-none">{post.dislikes}</span>
+            <div
+              className="flex items-center space-x-2 cursor-pointer hover:text-yellow-500"
+              onClick={handlePostDislike}
+            >
+              {postDisliked.disliked ? (
+                <HandThumbDownSolidIcon className="w-5 text-yellow-500" />
+              ) : (
+                <HandThumbDownIcon className="w-5" />
+              )}
+              <span className="select-none">
+                {postDisliked.synced === false
+                  ? post.dislikes + 1
+                  : post.dislikes}
+              </span>
             </div>
             <ChatBubbleOvalLeftEllipsisIcon className="w-5 cursor-pointer" />
             <RWebShare
