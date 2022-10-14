@@ -18,22 +18,25 @@ export default function Card(props) {
   const generator = new AvatarGenerator();
 
   const navigate = useNavigate();
-  const { isPostLiked, addPostLike } = usePost();
+  const { isPostLiked, addPostLike, removePostLike } = usePost();
 
-  // const [likesCount, setLikesCount] = useState(props.likes);
   const [dislikesCount, setDislikesCount] = useState(props.dislikes);
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
 
   useEffect(() => {
     const likedRes = isPostLiked(props.id);
-    likedRes &&
-      setPostLiked({ liked: likedRes.liked, synced: likedRes.synced });
+    likedRes
+      ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
+      : setPostLiked({ liked: false, synced: null });
   }, [isPostLiked, props.id]);
 
   const handlePostLike = () => {
-    // setLikesCount(likesCount + 1);
-    if (addPostLike(props.id)) {
+    if (postLiked.liked !== true) {
+      addPostLike(props.id);
       setPostLiked({ liked: true, synced: false });
+    } else {
+      removePostLike(props.id);
+      setPostLiked({ liked: false, synced: null });
     }
   };
 

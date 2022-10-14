@@ -27,7 +27,7 @@ export default function Post() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addPostLike, isPostLiked } = usePost();
+  const { addPostLike, removePostLike, isPostLiked } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
@@ -44,8 +44,9 @@ export default function Post() {
       setPost(postResponse);
       setComments(commentResponse);
       const likedRes = isPostLiked(id);
-      likedRes &&
-        setPostLiked({ liked: likedRes.liked, synced: likedRes.synced });
+      likedRes
+        ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
+        : setPostLiked({ liked: false, synced: null });
       setLoading(false);
     }
     getPost();
@@ -75,8 +76,12 @@ export default function Post() {
   };
 
   const handlePostLike = () => {
-    if (addPostLike(post.postId)) {
+    if (postLiked.liked !== true) {
+      addPostLike(post.postId);
       setPostLiked({ liked: true, synced: false });
+    } else {
+      removePostLike(post.postId);
+      setPostLiked({ liked: false, synced: null });
     }
   };
 
