@@ -152,7 +152,7 @@ export default function Post() {
             <RWebShare
               data={{
                 text: `Share - Confessions | ${post.name}`,
-                url: `/posts/${post.postId}`,
+                url: `${window.location.origin}/posts/${post.postId}`,
                 title: "Confessions",
               }}
               onClick={() => console.log("shared successfully!")}
