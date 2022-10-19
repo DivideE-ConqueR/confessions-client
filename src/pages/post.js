@@ -134,8 +134,12 @@ export default function Post() {
                   loading="lazy"
                   alt="avatar"
                 />
-                <h2 className="font-semibold text-base">{post?.name}</h2>
-                <p className="font-bold text-gray-300">·</p>
+                <h2
+                  className="font-semibold text-base dot__seperator"
+                  data-after-content="·"
+                >
+                  {post.name}
+                </h2>
                 <p className="text-gray-400/70">
                   <ReactTimeAgo
                     date={new Date(post.createdAt).getTime()}

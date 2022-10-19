@@ -82,8 +82,12 @@ export default function Card(props) {
                 loading="lazy"
                 alt="avatar"
               />
-              <h2 className="font-semibold text-base">{props.name}</h2>
-              <p className="font-bold text-gray-300">·</p>
+              <h2
+                className="font-semibold text-base dot__seperator"
+                data-after-content="·"
+              >
+                {props.name}
+              </h2>
               <p className="text-gray-400/70">
                 <ReactTimeAgo
                   date={props.createdAt}
