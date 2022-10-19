@@ -12,23 +12,43 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import { HandThumbUpIcon as HandThumbUpSolidIcon } from "@heroicons/react/24/solid";
+import {
+  HandThumbUpIcon as HandThumbUpSolidIcon,
+  HandThumbDownIcon as HandThumbDownSolidIcon,
+} from "@heroicons/react/24/solid";
 
 export default function Card(props) {
   const generator = new AvatarGenerator();
 
   const navigate = useNavigate();
-  const { isPostLiked, addPostLike, removePostLike } = usePost();
+  const {
+    isPostLiked,
+    addPostLike,
+    removePostLike,
+    addPostDislike,
+    removePostDislike,
+    isPostDisliked,
+  } = usePost();
 
-  const [dislikesCount, setDislikesCount] = useState(props.dislikes);
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
+  const [postDisliked, setPostDisliked] = useState({
+    disliked: null,
+    synced: null,
+  });
 
   useEffect(() => {
     const likedRes = isPostLiked(props.id);
+    const dislikedRes = isPostDisliked(props.id);
     likedRes
       ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
       : setPostLiked({ liked: false, synced: null });
-  }, [isPostLiked, props.id]);
+    dislikedRes
+      ? setPostDisliked({
+          disliked: dislikedRes.disliked,
+          synced: dislikedRes.synced,
+        })
+      : setPostDisliked({ disliked: false, synced: null });
+  }, [isPostLiked, isPostDisliked, props.id]);
 
   const handlePostLike = () => {
     if (postLiked.liked !== true) {
@@ -40,8 +60,14 @@ export default function Card(props) {
     }
   };
 
-  const decrement = () => {
-    setDislikesCount(dislikesCount + 1);
+  const handlePostDislike = () => {
+    if (postDisliked.disliked !== true) {
+      addPostDislike(props.id);
+      setPostDisliked({ disliked: true, synced: false });
+    } else {
+      removePostDislike(props.id);
+      setPostDisliked({ disliked: false, synced: null });
+    }
   };
 
   return (
@@ -80,15 +106,6 @@ export default function Card(props) {
         </div>
 
         <div className="px-6 pt-3 pb-4 flex space-x-8 items-center">
-          {/* <div className="flex items-center space-x-2">
-            <HandThumbUpIcon
-              className="w-5 cursor-pointer"
-              onClick={increment}
-            />
-            <span className="select-none">
-              {likesCount !== 0 && likesCount}
-            </span>
-          </div> */}
           <div
             className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
             onClick={handlePostLike}
@@ -102,13 +119,19 @@ export default function Card(props) {
               {postLiked.synced === false ? props.likes + 1 : props.likes}
             </span>
           </div>
-          <div className="flex items-center space-x-2">
-            <HandThumbDownIcon
-              className="w-5 cursor-pointer"
-              onClick={decrement}
-            />
+          <div
+            className="flex items-center space-x-2 cursor-pointer hover:text-yellow-500"
+            onClick={handlePostDislike}
+          >
+            {postDisliked.disliked ? (
+              <HandThumbDownSolidIcon className="w-5 text-yellow-500" />
+            ) : (
+              <HandThumbDownIcon className="w-5" />
+            )}
             <span className="select-none">
-              {dislikesCount !== 0 && dislikesCount}
+              {postDisliked.synced === false
+                ? props.dislikes + 1
+                : props.dislikes}
             </span>
           </div>
           <ChatBubbleOvalLeftEllipsisIcon
