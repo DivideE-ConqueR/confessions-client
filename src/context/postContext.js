@@ -7,41 +7,59 @@ export default function PostProvider({ children }) {
   const [postLikes, setPostLikes] = useState(getFromLS("postLikes"));
   const [postUnlikes, setPostUnlikes] = useState(getFromLS("postUnlikes"));
   const [postDislikes, setPostDislikes] = useState(getFromLS("postDislikes"));
+  const [postUndislikes, setPostUndislikes] = useState(
+    getFromLS("postUndislikes")
+  );
 
   useEffect(() => {
     setToLS("postLikes", postLikes);
     setToLS("postUnlikes", postUnlikes);
     setToLS("postDislikes", postDislikes);
-  }, [postLikes, postUnlikes, postDislikes]);
+    setToLS("postUndislikes", postUndislikes);
+  }, [postLikes, postUnlikes, postDislikes, postUndislikes]);
 
   const addPostLike = (id) => {
-    // if (postLikes.findIndex((post) => post.id === id) === -1) {
+    const newPostDislikes = postDislikes.filter((post) => post.id !== id);
+    setPostDislikes(newPostDislikes);
     const newPostUnlikes = postUnlikes.filter((post) => post.id !== id);
     setPostUnlikes(newPostUnlikes);
     const newPostLikes = [...postLikes, { id, liked: true, synced: false }];
     setPostLikes(newPostLikes);
-    // return true;
-    // }
-    // return false;
   };
 
   const removePostLike = (id) => {
+    if (isPostLiked(id)?.synced === true) {
+      const newPostUnlikes = [
+        ...postUnlikes,
+        { id, liked: false, synced: false },
+      ];
+      setPostUnlikes(newPostUnlikes);
+    }
     const newPostLikes = postLikes.filter((post) => post.id !== id);
     setPostLikes(newPostLikes);
-    const newPostUnlikes = [
-      ...postUnlikes,
-      { id, liked: false, synced: false },
-    ];
-    setPostUnlikes(newPostUnlikes);
   };
 
   const addPostDislike = (id) => {
     const newPostLikes = postLikes.filter((post) => post.id !== id);
     setPostLikes(newPostLikes);
+    const newPostUndislikes = postUndislikes.filter((post) => post.id !== id);
+    setPostUndislikes(newPostUndislikes);
     const newPostDislikes = [
       ...postDislikes,
-      { id, disliked: false, synced: false },
+      { id, disliked: true, synced: false },
     ];
+    setPostDislikes(newPostDislikes);
+  };
+
+  const removePostDislike = (id) => {
+    if (isPostDisliked(id)?.synced === true) {
+      const newPostUndislikes = [
+        ...postUndislikes,
+        { id, disliked: false, synced: false },
+      ];
+      setPostUndislikes(newPostUndislikes);
+    }
+    const newPostDislikes = postDislikes.filter((post) => post.id !== id);
     setPostDislikes(newPostDislikes);
   };
 
@@ -56,11 +74,11 @@ export default function PostProvider({ children }) {
   return (
     <PostContext.Provider
       value={{
-        postLikes,
         addPostLike,
         removePostLike,
         isPostLiked,
         addPostDislike,
+        removePostDislike,
         isPostDisliked,
       }}
     >

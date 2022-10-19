@@ -33,6 +33,7 @@ export default function Post() {
     removePostLike,
     isPostLiked,
     addPostDislike,
+    removePostDislike,
     isPostDisliked,
   } = usePost();
 
@@ -107,12 +108,10 @@ export default function Post() {
     if (postDisliked.disliked !== true) {
       addPostDislike(post.postId);
       setPostDisliked({ disliked: true, synced: false });
+    } else {
+      removePostDislike(post.postId);
+      setPostDisliked({ disliked: false, synced: null });
     }
-
-    // else {
-    //   removePostDislike(post.postId);
-    //   setPostDisliked({ disliked: false, synced: null });
-    // }
   };
 
   return (
