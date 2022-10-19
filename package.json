@@ -50,7 +50,7 @@
     "@testing-library/user-event": "^14.4.3",
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
-    "preact": "^10.11.1",
+    "preact": "^10.11.2",
     "tailwindcss": "^3.1.8"
   }
 }
