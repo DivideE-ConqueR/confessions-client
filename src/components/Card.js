@@ -142,8 +142,8 @@ export default function Card(props) {
           />
           <RWebShare
             data={{
-              text: "Web Share - Confessions",
-              url: "http://localhost:3000",
+              text: `Share - Confessions | ${props.name}`,
+              url: `${window.location.origin}/posts/${props.id}`,
               title: "Confessions",
             }}
             onClick={() => console.log("shared successfully!")}
