@@ -90,7 +90,7 @@ export default function Card(props) {
               </h2>
               <p className="text-gray-400/70">
                 <ReactTimeAgo
-                  date={props.createdAt}
+                  date={new Date(props.createdAt).getTime()}
                   locale="en-IN"
                   timeStyle="mini-minute-now"
                 />
