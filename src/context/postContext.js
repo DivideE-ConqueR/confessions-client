@@ -21,8 +21,13 @@ export default function PostProvider({ children }) {
 
   useEffect(() => {
     const timer = setInterval(async () => {
-      await Promise.all([syncLikes(), syncUnlikes()]);
-    }, 2 * 60 * 1000);
+      await Promise.all([
+        syncLikes(),
+        syncUnlikes(),
+        syncDislikes(),
+        syncUndislikes(),
+      ]);
+    }, 10 * 1000);
 
     return () => clearInterval(timer);
   });
@@ -125,6 +130,54 @@ export default function PostProvider({ children }) {
     await axios.post("/unlikes", { ids }).then((res) => {
       console.log(res);
       setPostLikes(copyPostUnlikes);
+    });
+  };
+
+  const syncDislikes = async () => {
+    // this is the problem, structuredClone is not supported by all browsers yet...
+    // const copyPostUnlikes = structuredClone(postUnlikes);
+
+    const copyPostDislikes = postDislikes.map((x) => ({ ...x }));
+    const ids = [];
+
+    copyPostDislikes.forEach((post) => {
+      if (post.synced === false) {
+        post.synced = true;
+        ids.push(post.id);
+      }
+    });
+
+    console.log("syncing dislikes", ids);
+
+    if (!(ids.length > 0)) return;
+
+    await axios.post("/dislikes", { ids }).then((res) => {
+      console.log(res);
+      setPostDislikes(copyPostDislikes);
+    });
+  };
+
+  const syncUndislikes = async () => {
+    // this is the problem, structuredClone is not supported by all browsers yet...
+    // const copyPostUnlikes = structuredClone(postUnlikes);
+
+    const copyPostUndislikes = postUndislikes.map((x) => ({ ...x }));
+    const ids = [];
+
+    copyPostUndislikes.forEach((post) => {
+      if (post.synced === false) {
+        post.synced = true;
+        ids.push(post.id);
+      }
+    });
+
+    console.log("syncing undislikes", ids);
+
+    if (!(ids.length > 0)) return;
+
+    await axios.post("/undislikes", { ids }).then((res) => {
+      console.log(res);
+      setPostUndislikes(copyPostUndislikes);
     });
   };
 
