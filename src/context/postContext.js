@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getFromLS, setToLS } from "../utils/localStorage";
+import axios from "../api/base";
 
 export const PostContext = createContext(null);
 
@@ -17,6 +18,14 @@ export default function PostProvider({ children }) {
     setToLS("postDislikes", postDislikes);
     setToLS("postUndislikes", postUndislikes);
   }, [postLikes, postUnlikes, postDislikes, postUndislikes]);
+
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      await Promise.all([syncLikes(), syncUnlikes()]);
+    }, 2 * 60 * 1000);
+
+    return () => clearInterval(timer);
+  });
 
   const addPostLike = (id) => {
     const newPostDislikes = postDislikes.filter((post) => post.id !== id);
@@ -69,6 +78,54 @@ export default function PostProvider({ children }) {
 
   const isPostDisliked = (id) => {
     return postDislikes.find((post) => post.id === id);
+  };
+
+  const syncLikes = async () => {
+    // this is the problem, structuredClone is not supported by all browsers yet...
+    // const copyPostLikes = structuredClone(postLikes);
+
+    const copyPostLikes = postLikes.map((x) => ({ ...x }));
+    const ids = [];
+
+    copyPostLikes.forEach((post) => {
+      if (post.synced === false) {
+        post.synced = true;
+        ids.push(post.id);
+      }
+    });
+
+    console.log("syncing likes", ids);
+
+    if (!(ids.length > 0)) return;
+
+    await axios.post("/likes", { ids }).then((res) => {
+      console.log(res);
+      setPostLikes(copyPostLikes);
+    });
+  };
+
+  const syncUnlikes = async () => {
+    // this is the problem, structuredClone is not supported by all browsers yet...
+    // const copyPostUnlikes = structuredClone(postUnlikes);
+
+    const copyPostUnlikes = postUnlikes.map((x) => ({ ...x }));
+    const ids = [];
+
+    copyPostUnlikes.forEach((post) => {
+      if (post.synced === false) {
+        post.synced = true;
+        ids.push(post.id);
+      }
+    });
+
+    console.log("syncing unlikes", ids);
+
+    if (!(ids.length > 0)) return;
+
+    await axios.post("/unlikes", { ids }).then((res) => {
+      console.log(res);
+      setPostLikes(copyPostUnlikes);
+    });
   };
 
   return (
