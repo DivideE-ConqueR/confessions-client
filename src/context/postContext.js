@@ -86,7 +86,7 @@ export default function PostProvider({ children }) {
   };
 
   const syncLikes = async () => {
-    // this is the problem, structuredClone is not supported by all browsers yet...
+    // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostLikes = structuredClone(postLikes);
 
     const copyPostLikes = postLikes.map((x) => ({ ...x }));
@@ -110,7 +110,7 @@ export default function PostProvider({ children }) {
   };
 
   const syncUnlikes = async () => {
-    // this is the problem, structuredClone is not supported by all browsers yet...
+    // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
     const copyPostUnlikes = postUnlikes.map((x) => ({ ...x }));
@@ -134,7 +134,7 @@ export default function PostProvider({ children }) {
   };
 
   const syncDislikes = async () => {
-    // this is the problem, structuredClone is not supported by all browsers yet...
+    // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
     const copyPostDislikes = postDislikes.map((x) => ({ ...x }));
@@ -158,7 +158,7 @@ export default function PostProvider({ children }) {
   };
 
   const syncUndislikes = async () => {
-    // this is the problem, structuredClone is not supported by all browsers yet...
+    // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
     const copyPostUndislikes = postUndislikes.map((x) => ({ ...x }));
