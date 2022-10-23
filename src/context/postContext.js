@@ -5,18 +5,18 @@ import axios from "../api/base";
 export const PostContext = createContext(null);
 
 export default function PostProvider({ children }) {
-  const [postLikes, setPostLikes] = useState(getFromLS("postLikes"));
-  const [postUnlikes, setPostUnlikes] = useState(getFromLS("postUnlikes"));
-  const [postDislikes, setPostDislikes] = useState(getFromLS("postDislikes"));
+  const [postLikes, setPostLikes] = useState(getFromLS("post_likes"));
+  const [postUnlikes, setPostUnlikes] = useState(getFromLS("post_unlikes"));
+  const [postDislikes, setPostDislikes] = useState(getFromLS("post_dislikes"));
   const [postUndislikes, setPostUndislikes] = useState(
-    getFromLS("postUndislikes")
+    getFromLS("post_undislikes")
   );
 
   useEffect(() => {
-    setToLS("postLikes", postLikes);
-    setToLS("postUnlikes", postUnlikes);
-    setToLS("postDislikes", postDislikes);
-    setToLS("postUndislikes", postUndislikes);
+    setToLS("post_likes", postLikes);
+    setToLS("post_unlikes", postUnlikes);
+    setToLS("post_dislikes", postDislikes);
+    setToLS("post_undislikes", postUndislikes);
   }, [postLikes, postUnlikes, postDislikes, postUndislikes]);
 
   useEffect(() => {
@@ -33,46 +33,49 @@ export default function PostProvider({ children }) {
   });
 
   const addPostLike = (id) => {
+    if (isPostDisliked(id)?.synced === true) {
+      setPostUndislikes((prev) => [
+        ...prev,
+        { id, disliked: false, synced: false },
+      ]);
+    }
+
     const newPostDislikes = postDislikes.filter((post) => post.id !== id);
-    setPostDislikes(newPostDislikes);
     const newPostUnlikes = postUnlikes.filter((post) => post.id !== id);
+    setPostDislikes(newPostDislikes);
     setPostUnlikes(newPostUnlikes);
-    const newPostLikes = [...postLikes, { id, liked: true, synced: false }];
-    setPostLikes(newPostLikes);
+    setPostLikes((prev) => [...prev, { id, liked: true, synced: false }]);
   };
 
   const removePostLike = (id) => {
     if (isPostLiked(id)?.synced === true) {
-      const newPostUnlikes = [
-        ...postUnlikes,
-        { id, liked: false, synced: false },
-      ];
-      setPostUnlikes(newPostUnlikes);
+      setPostUnlikes((prev) => [...prev, { id, liked: false, synced: false }]);
     }
+
     const newPostLikes = postLikes.filter((post) => post.id !== id);
     setPostLikes(newPostLikes);
   };
 
   const addPostDislike = (id) => {
+    if (isPostLiked(id)?.synced === true) {
+      setPostUnlikes((prev) => [...prev, { id, liked: false, synced: false }]);
+    }
+
     const newPostLikes = postLikes.filter((post) => post.id !== id);
-    setPostLikes(newPostLikes);
     const newPostUndislikes = postUndislikes.filter((post) => post.id !== id);
+    setPostLikes(newPostLikes);
     setPostUndislikes(newPostUndislikes);
-    const newPostDislikes = [
-      ...postDislikes,
-      { id, disliked: true, synced: false },
-    ];
-    setPostDislikes(newPostDislikes);
+    setPostDislikes((prev) => [...prev, { id, disliked: true, synced: false }]);
   };
 
   const removePostDislike = (id) => {
     if (isPostDisliked(id)?.synced === true) {
-      const newPostUndislikes = [
-        ...postUndislikes,
+      setPostUndislikes((prev) => [
+        ...prev,
         { id, disliked: false, synced: false },
-      ];
-      setPostUndislikes(newPostUndislikes);
+      ]);
     }
+
     const newPostDislikes = postDislikes.filter((post) => post.id !== id);
     setPostDislikes(newPostDislikes);
   };
@@ -99,14 +102,16 @@ export default function PostProvider({ children }) {
       }
     });
 
-    console.log("syncing likes", ids);
-
     if (!(ids.length > 0)) return;
 
-    await axios.post("/likes", { ids }).then((res) => {
-      console.log(res);
+    try {
+      await axios.post("/likes", { ids });
       setPostLikes(copyPostLikes);
-    });
+    } catch (error) {
+      console.log(
+        `${error.code}: ${error.response.status} - ${error.response.data}`
+      );
+    }
   };
 
   const syncUnlikes = async () => {
@@ -123,14 +128,16 @@ export default function PostProvider({ children }) {
       }
     });
 
-    console.log("syncing unlikes", ids);
-
     if (!(ids.length > 0)) return;
 
-    await axios.post("/unlikes", { ids }).then((res) => {
-      console.log(res);
+    try {
+      await axios.post("/unlikes", { ids });
       setPostUnlikes(copyPostUnlikes);
-    });
+    } catch (error) {
+      console.log(
+        `${error.code}: ${error.response.status} - ${error.response.data}`
+      );
+    }
   };
 
   const syncDislikes = async () => {
@@ -147,14 +154,16 @@ export default function PostProvider({ children }) {
       }
     });
 
-    console.log("syncing dislikes", ids);
-
     if (!(ids.length > 0)) return;
 
-    await axios.post("/dislikes", { ids }).then((res) => {
-      console.log(res);
+    try {
+      await axios.post("/dislikes", { ids });
       setPostDislikes(copyPostDislikes);
-    });
+    } catch (error) {
+      console.log(
+        `${error.code}: ${error.response.status} - ${error.response.data}`
+      );
+    }
   };
 
   const syncUndislikes = async () => {
@@ -171,14 +180,16 @@ export default function PostProvider({ children }) {
       }
     });
 
-    console.log("syncing undislikes", ids);
-
     if (!(ids.length > 0)) return;
 
-    await axios.post("/undislikes", { ids }).then((res) => {
-      console.log(res);
+    try {
+      await axios.post("/undislikes", { ids });
       setPostUndislikes(copyPostUndislikes);
-    });
+    } catch (error) {
+      console.log(
+        `${error.code}: ${error.response.status} - ${error.response.data}`
+      );
+    }
   };
 
   return (
