@@ -27,7 +27,7 @@ export default function PostProvider({ children }) {
         syncDislikes(),
         syncUndislikes(),
       ]);
-    }, 10 * 1000);
+    }, 1 * 60 * 1000);
 
     return () => clearInterval(timer);
   });
