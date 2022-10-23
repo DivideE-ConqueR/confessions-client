@@ -129,7 +129,7 @@ export default function PostProvider({ children }) {
 
     await axios.post("/unlikes", { ids }).then((res) => {
       console.log(res);
-      setPostLikes(copyPostUnlikes);
+      setPostUnlikes(copyPostUnlikes);
     });
   };
 
