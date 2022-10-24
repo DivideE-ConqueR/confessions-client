@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AvatarGenerator } from "random-avatar-generator";
+import ReactTimeAgo from "react-time-ago";
+import ReactHashtag from "react-hashtag";
+import { RWebShare } from "react-web-share";
 import axios from "../api/base";
+import { usePost } from "../hooks/usePost";
+import Navbar from "../components/Navbar";
+import Input from "../components/Input";
+import Comment from "../components/Comment";
+import { CircularProgress } from "@mui/material";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalIcon,
@@ -9,25 +17,35 @@ import {
   HandThumbUpIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { CircularProgress } from "@mui/material";
-import ReactTimeAgo from "react-time-ago";
-import ReactHashtag from "react-hashtag";
-import { RWebShare } from "react-web-share";
-import Navbar from "../components/Navbar";
-import Comment from "../components/Comment";
-import Input from "../components/Input";
+import {
+  ChatBubbleLeftRightIcon,
+  HandThumbUpIcon as HandThumbUpSolidIcon,
+  HandThumbDownIcon as HandThumbDownSolidIcon,
+} from "@heroicons/react/24/solid";
 
 export default function Post() {
   const generator = new AvatarGenerator();
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const {
+    addPostLike,
+    removePostLike,
+    isPostLiked,
+    addPostDislike,
+    removePostDislike,
+    isPostDisliked,
+  } = usePost();
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [commentBody, setCommentBody] = useState("");
+  const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
+  const [postDisliked, setPostDisliked] = useState({
+    disliked: null,
+    synced: null,
+  });
 
   useEffect(() => {
     async function getPost() {
@@ -37,10 +55,21 @@ export default function Post() {
       ]);
       setPost(postResponse);
       setComments(commentResponse);
+      const likedRes = isPostLiked(id);
+      const dislikedRes = isPostDisliked(id);
+      likedRes
+        ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
+        : setPostLiked({ liked: false, synced: null });
+      dislikedRes
+        ? setPostDisliked({
+            disliked: dislikedRes.disliked,
+            synced: dislikedRes.synced,
+          })
+        : setPostDisliked({ disliked: false, synced: null });
       setLoading(false);
     }
     getPost();
-  }, [id]);
+  }, [id, isPostLiked, isPostDisliked]);
 
   const handleClick = async () => {
     await axios
@@ -65,6 +94,26 @@ export default function Post() {
       });
   };
 
+  const handlePostLike = () => {
+    if (postLiked.liked !== true) {
+      addPostLike(post.postId);
+      setPostLiked({ liked: true, synced: false });
+    } else {
+      removePostLike(post.postId);
+      setPostLiked({ liked: false, synced: null });
+    }
+  };
+
+  const handlePostDislike = () => {
+    if (postDisliked.disliked !== true) {
+      addPostDislike(post.postId);
+      setPostDisliked({ disliked: true, synced: false });
+    } else {
+      removePostDislike(post.postId);
+      setPostDisliked({ disliked: false, synced: null });
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -85,8 +134,12 @@ export default function Post() {
                   loading="lazy"
                   alt="avatar"
                 />
-                <h2 className="font-semibold text-base">{post?.name}</h2>
-                <p className="font-bold text-gray-300">·</p>
+                <h2
+                  className="font-semibold text-base dot__seperator"
+                  data-after-content="·"
+                >
+                  {post.name}
+                </h2>
                 <p className="text-gray-400/70">
                   <ReactTimeAgo
                     date={new Date(post.createdAt).getTime()}
@@ -108,25 +161,39 @@ export default function Post() {
             </p>
           </div>
           <div className="px-6 pt-3 pb-4 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <HandThumbUpIcon
-                className="w-5 cursor-pointer"
-                // onClick={increment}
-              />
-              <span className="select-none">{post.likes}</span>
+            <div
+              className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
+              onClick={handlePostLike}
+            >
+              {postLiked.liked ? (
+                <HandThumbUpSolidIcon className="w-5 text-blue-500" />
+              ) : (
+                <HandThumbUpIcon className="w-5" />
+              )}
+              <span className="select-none">
+                {postLiked.synced === false ? post.likes + 1 : post.likes}
+              </span>
             </div>
-            <div className="flex items-center space-x-2">
-              <HandThumbDownIcon
-                className="w-5 cursor-pointer"
-                // onClick={decrement}
-              />
-              <span className="select-none">{post.dislikes}</span>
+            <div
+              className="flex items-center space-x-2 cursor-pointer hover:text-yellow-500"
+              onClick={handlePostDislike}
+            >
+              {postDisliked.disliked ? (
+                <HandThumbDownSolidIcon className="w-5 text-yellow-500" />
+              ) : (
+                <HandThumbDownIcon className="w-5" />
+              )}
+              <span className="select-none">
+                {postDisliked.synced === false
+                  ? post.dislikes + 1
+                  : post.dislikes}
+              </span>
             </div>
             <ChatBubbleOvalLeftEllipsisIcon className="w-5 cursor-pointer" />
             <RWebShare
               data={{
                 text: `Share - Confessions | ${post.name}`,
-                url: `/posts/${post.postId}`,
+                url: `${window.location.origin}/posts/${post.postId}`,
                 title: "Confessions",
               }}
               onClick={() => console.log("shared successfully!")}

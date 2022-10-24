@@ -7,6 +7,11 @@ module.exports = {
         poppins: ["Poppins", "sans-serif"],
         dynaPuff: ["DynaPuff", "cursive"],
       },
+      colors: {
+        primary: "#1856AD",
+        primary_light: "#97D2EC",
+        secondary: "#0F3460",
+      },
     },
   },
   plugins: [],
