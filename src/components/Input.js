@@ -29,13 +29,13 @@ export default function Input({
         id="large-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-[#1856AD] focus:outline-none"
+        className="p-2.5 w-full text-sm bg-gray-50 rounded-lg border-2 border-gray-300 focus:ring focus:ring-primary focus:outline-none"
         placeholder={placeholder}
       />
       <button
         disabled={value.length === 0 && !loading ? true : false}
         onClick={handleOnClick}
-        className="w-full h-12 p-2.5 text-sm font-medium rounded-lg text-white bg-[#1856AD] hover:bg-[#0F3460] focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-[#97D2EC] disabled:cursor-not-allowed"
+        className="w-full h-12 p-2.5 text-sm font-medium rounded-lg text-white bg-primary hover:bg-secondary focus:ring focus:ring-gray-500 focus:outline-none cursor-pointer disabled:bg-primary_light disabled:cursor-not-allowed"
       >
         {loading ? (
           <span className="flex justify-center">
