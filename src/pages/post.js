@@ -9,6 +9,7 @@ import { usePost } from "../hooks/usePost";
 import Header from "../components/Header";
 import Input from "../components/Input";
 import Comment from "../components/Comment";
+import Footer from "../components/Footer";
 import { CircularProgress } from "@mui/material";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
@@ -236,6 +237,7 @@ export default function Post() {
           </div>
         </>
       )}
+      <Footer />
     </>
   );
 }

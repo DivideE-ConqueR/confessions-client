@@ -4,6 +4,7 @@ import axios from "../api/base";
 import Header from "../components/Header";
 import Input from "../components/Input";
 import CustomAlert from "../components/CustomAlert";
+import Footer from "../components/Footer";
 
 export default function New() {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ export default function New() {
         severity={alertState.severity}
         message={alertState.message}
       />
+      <Footer />
     </>
   );
 }

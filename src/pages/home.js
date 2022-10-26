@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../api/base";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -31,6 +32,7 @@ export default function Home() {
           />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
