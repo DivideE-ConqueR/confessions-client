@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/base";
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 import Input from "../components/Input";
 import CustomAlert from "../components/CustomAlert";
 
@@ -69,7 +69,7 @@ export default function New() {
 
   return (
     <>
-      <Navbar />
+      <Header />
 
       <div className="p-4 space-y-6">
         <h1 className="font-medium text-center">

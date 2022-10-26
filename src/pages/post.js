@@ -6,7 +6,7 @@ import ReactHashtag from "react-hashtag";
 import { RWebShare } from "react-web-share";
 import axios from "../api/base";
 import { usePost } from "../hooks/usePost";
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 import Input from "../components/Input";
 import Comment from "../components/Comment";
 import { CircularProgress } from "@mui/material";
@@ -116,7 +116,7 @@ export default function Post() {
 
   return (
     <>
-      <Navbar />
+      <Header />
       {loading ? (
         <div className="h-[85vh] grid place-items-center">
           <CircularProgress />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../api/base";
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 import Card from "../components/Card";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar />
+      <Header />
       <div className="p-4 bg-slate-400/20 flex flex-col space-y-4">
         {posts.map((post) => (
           <Card
