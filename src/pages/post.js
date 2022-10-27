@@ -9,10 +9,10 @@ import { usePost } from "../hooks/usePost";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import Comment from "../components/Comment";
+import Report from "../components/Report";
 import { CircularProgress } from "@mui/material";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
-  EllipsisHorizontalIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
   ShareIcon,
@@ -148,7 +148,7 @@ export default function Post() {
                   />
                 </p>
               </div>
-              <EllipsisHorizontalIcon className="w-6 text-gray-500" />
+              <Report />
             </div>
             <p className="text-gray-600 text-xl whitespace-pre-line break-words">
               <ReactHashtag

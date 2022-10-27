@@ -5,9 +5,9 @@ import ReactHashtag from "react-hashtag";
 import ReactTimeAgo from "react-time-ago";
 import { AvatarGenerator } from "random-avatar-generator";
 import { usePost } from "../hooks/usePost";
+import Report from "./Report";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
-  EllipsisHorizontalIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
   ShareIcon,
@@ -96,7 +96,7 @@ export default function Card(props) {
                 />
               </p>
             </div>
-            <EllipsisHorizontalIcon className="w-6 text-gray-500" />
+            <Report />
           </div>
           <p className="text-gray-600 text-base whitespace-pre-line">
             <ReactHashtag
