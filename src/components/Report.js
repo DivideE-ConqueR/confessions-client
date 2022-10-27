@@ -5,21 +5,13 @@ import { EllipsisHorizontalIcon, FlagIcon } from "@heroicons/react/24/outline";
 export default function Report() {
   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const handleClickAway = () => {
-    setOpen(false);
-  };
-
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className="relative">
         <button
           type="button"
           className="focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 rounded-full transition ease-in-out duration-150"
-          onClick={handleClick}
+          onClick={() => setOpen((prev) => !prev)}
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
