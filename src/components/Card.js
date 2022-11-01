@@ -28,6 +28,8 @@ export default function Card(props) {
     addPostDislike,
     removePostDislike,
     isPostDisliked,
+    isPostReported,
+    addPostReport,
   } = usePost();
 
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
@@ -35,10 +37,15 @@ export default function Card(props) {
     disliked: null,
     synced: null,
   });
+  const [postReported, setPostReported] = useState({
+    reported: null,
+    synced: null,
+  });
 
   useEffect(() => {
     const likedRes = isPostLiked(props.id);
     const dislikedRes = isPostDisliked(props.id);
+    const reportedRes = isPostReported(props.id);
     likedRes
       ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
       : setPostLiked({ liked: false, synced: null });
@@ -48,7 +55,13 @@ export default function Card(props) {
           synced: dislikedRes.synced,
         })
       : setPostDisliked({ disliked: false, synced: null });
-  }, [isPostLiked, isPostDisliked, props.id]);
+    reportedRes
+      ? setPostReported({
+          reported: reportedRes.reported,
+          synced: reportedRes.synced,
+        })
+      : setPostReported({ reported: false, synced: null });
+  }, [isPostLiked, isPostDisliked, isPostReported, props.id]);
 
   const handlePostLike = () => {
     if (postLiked.liked !== true) {
@@ -96,7 +109,11 @@ export default function Card(props) {
                 />
               </p>
             </div>
-            <Report />
+            <Report
+              id={props.id}
+              postReported={postReported}
+              setPostReported={setPostReported}
+            />
           </div>
           <p className="text-gray-600 text-base whitespace-pre-line">
             <ReactHashtag

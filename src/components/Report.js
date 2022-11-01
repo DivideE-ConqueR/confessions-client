@@ -1,9 +1,19 @@
 import { useState } from "react";
+import { usePost } from "../hooks/usePost";
 import { ClickAwayListener } from "@mui/material";
 import { EllipsisHorizontalIcon, FlagIcon } from "@heroicons/react/24/outline";
 
-export default function Report() {
+export default function Report({ id, postReported, setPostReported }) {
+  const { addPostReport, isPostReported } = usePost();
+
   const [open, setOpen] = useState(false);
+
+  const handlePostReport = () => {
+    if (isPostReported(id) !== true) {
+      addPostReport(id);
+      setPostReported({ reported: true, synced: false });
+    }
+  };
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -31,6 +41,7 @@ export default function Report() {
             <button
               type="submit"
               className="w-full px-4 py-2 flex space-x-3 text-sm text-gray-700"
+              onClick={handlePostReport}
               role="menuitem"
               tabIndex="-1"
               id="menu-item-1"

@@ -11,13 +11,15 @@ export default function PostProvider({ children }) {
   const [postUndislikes, setPostUndislikes] = useState(
     getFromLS("post_undislikes")
   );
+  const [postReports, setPostReports] = useState(getFromLS("post_report"));
 
   useEffect(() => {
     setToLS("post_likes", postLikes);
     setToLS("post_unlikes", postUnlikes);
     setToLS("post_dislikes", postDislikes);
     setToLS("post_undislikes", postUndislikes);
-  }, [postLikes, postUnlikes, postDislikes, postUndislikes]);
+    setToLS("post_report", postReports);
+  }, [postLikes, postUnlikes, postDislikes, postUndislikes, postReports]);
 
   useEffect(() => {
     const timer = setInterval(async () => {
@@ -26,6 +28,7 @@ export default function PostProvider({ children }) {
         syncUnlikes(),
         syncDislikes(),
         syncUndislikes(),
+        // syncReports(),
       ]);
     }, 1 * 60 * 1000);
 
@@ -80,12 +83,20 @@ export default function PostProvider({ children }) {
     setPostDislikes(newPostDislikes);
   };
 
+  const addPostReport = (id) => {
+    setPostReports((prev) => [...prev, { id, reported: true, synced: false }]);
+  };
+
   const isPostLiked = (id) => {
     return postLikes.find((post) => post.id === id);
   };
 
   const isPostDisliked = (id) => {
     return postDislikes.find((post) => post.id === id);
+  };
+
+  const isPostReported = (id) => {
+    return postReports.find((post) => post.id === id);
   };
 
   const syncLikes = async () => {
@@ -201,6 +212,8 @@ export default function PostProvider({ children }) {
         addPostDislike,
         removePostDislike,
         isPostDisliked,
+        addPostReport,
+        isPostReported,
       }}
     >
       {children}
