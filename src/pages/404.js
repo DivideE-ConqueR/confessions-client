@@ -1,25 +1,25 @@
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 export default function Custom404() {
   document.title = "404 - Page not found | Confessions";
-  document.body.style.maxWidth = "100%";
 
   return (
     <>
-      <div className="p-6 sm:p-12 lg:p-20 w-screen h-screen flex flex-col justify-between bg-[#f5f5f5]">
-        <div className="font-mono text-lg tracking-wider">404</div>
-        <div className="flex flex-col space-y-7">
-          <h1 className=" text-3xl sm:text-5xl font-medium">Page not found</h1>
-          <p className="text-lg">
-            The page you are looking for doesn&apos;t exist or has been moved.
-          </p>
-          <span>
-            Back to{" "}
-            <a className="bg-yellow-400" href="/">
-              home
-            </a>
-          </span>
-        </div>
-        <div />
+      <Header />
+      <div className="flex flex-col items-center justify-center h-48 space-y-1">
+        <p className="font-sourceCodePro font-semibold text-9xl tracking-wider sm:tracking-widest">
+          404
+        </p>
+        <p className="font-medium">Didn&apos;t find anything here!</p>
       </div>
+      <p className="my-8 text-center">
+        Back to{" "}
+        <a href="/" className="underline">
+          home
+        </a>
+      </p>
+      <Footer />
     </>
   );
 }
