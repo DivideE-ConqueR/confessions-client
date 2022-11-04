@@ -221,7 +221,7 @@ export default function PostProvider({ children }) {
 
   const syncReports = async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
-    // const copyPostLikes = structuredClone(postLikes);
+    // const copyPostReports = structuredClone(postReports);
 
     const copyPostReports = postReports.map((x) => ({ ...x }));
     const ids = [];
