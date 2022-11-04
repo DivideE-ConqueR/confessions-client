@@ -5,21 +5,37 @@ import axios from "../api/base";
 export const PostContext = createContext(null);
 
 export default function PostProvider({ children }) {
-  const [postLikes, setPostLikes] = useState(getFromLS("post_likes"));
-  const [postUnlikes, setPostUnlikes] = useState(getFromLS("post_unlikes"));
-  const [postDislikes, setPostDislikes] = useState(getFromLS("post_dislikes"));
-  const [postUndislikes, setPostUndislikes] = useState(
-    getFromLS("post_undislikes")
-  );
-  const [postReports, setPostReports] = useState(getFromLS("post_reports"));
+  const _starterPostLikes = getFromLS("post_likes");
+  const _starterPostUnlikes = getFromLS("post_unlikes");
+  const _starterPostDislikes = getFromLS("post_dislikes");
+  const _starterPostUndislikes = getFromLS("post_undislikes");
+  const _starterPostReports = getFromLS("post_reports");
+
+  const [postLikes, setPostLikes] = useState(_starterPostLikes);
+  const [postUnlikes, setPostUnlikes] = useState(_starterPostUnlikes);
+  const [postDislikes, setPostDislikes] = useState(_starterPostDislikes);
+  const [postUndislikes, setPostUndislikes] = useState(_starterPostUndislikes);
+  const [postReports, setPostReports] = useState(_starterPostReports);
 
   useEffect(() => {
     setToLS("post_likes", postLikes);
+  }, [postLikes]);
+
+  useEffect(() => {
     setToLS("post_unlikes", postUnlikes);
+  }, [postUnlikes]);
+
+  useEffect(() => {
     setToLS("post_dislikes", postDislikes);
+  }, [postDislikes]);
+
+  useEffect(() => {
     setToLS("post_undislikes", postUndislikes);
+  }, [postUndislikes]);
+
+  useEffect(() => {
     setToLS("post_reports", postReports);
-  }, [postLikes, postUnlikes, postDislikes, postUndislikes, postReports]);
+  }, [postReports]);
 
   useEffect(() => {
     const syncTimer = setInterval(async () => {
