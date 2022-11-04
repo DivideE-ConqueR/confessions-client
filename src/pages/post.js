@@ -36,6 +36,7 @@ export default function Post() {
     addPostDislike,
     removePostDislike,
     isPostDisliked,
+    isPostReported,
   } = usePost();
 
   const [loading, setLoading] = useState(true);
@@ -45,6 +46,10 @@ export default function Post() {
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
   const [postDisliked, setPostDisliked] = useState({
     disliked: null,
+    synced: null,
+  });
+  const [postReported, setPostReported] = useState({
+    reported: null,
     synced: null,
   });
 
@@ -58,6 +63,7 @@ export default function Post() {
       setComments(commentResponse);
       const likedRes = isPostLiked(id);
       const dislikedRes = isPostDisliked(id);
+      const reportedRes = isPostReported(id);
       likedRes
         ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
         : setPostLiked({ liked: false, synced: null });
@@ -67,10 +73,16 @@ export default function Post() {
             synced: dislikedRes.synced,
           })
         : setPostDisliked({ disliked: false, synced: null });
+      reportedRes
+        ? setPostReported({
+            reported: reportedRes.reported,
+            synced: reportedRes.synced,
+          })
+        : setPostReported({ reported: false, synced: null });
       setLoading(false);
     }
     getPost();
-  }, [id, isPostLiked, isPostDisliked]);
+  }, [id, isPostLiked, isPostDisliked, isPostReported]);
 
   const handleClick = async () => {
     await axios
@@ -149,7 +161,11 @@ export default function Post() {
                   />
                 </p>
               </div>
-              <Report />
+              <Report
+                id={id}
+                postReported={postReported}
+                setPostReported={setPostReported}
+              />
             </div>
             <p className="text-gray-600 text-xl whitespace-pre-line break-words">
               <ReactHashtag
