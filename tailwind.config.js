@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         dynaPuff: ["DynaPuff", "cursive"],
+        sourceCodePro: ["'Source Code Pro'", "monospace"],
       },
       colors: {
         primary: "#1856AD",
