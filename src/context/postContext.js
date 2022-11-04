@@ -22,7 +22,7 @@ export default function PostProvider({ children }) {
   }, [postLikes, postUnlikes, postDislikes, postUndislikes, postReports]);
 
   useEffect(() => {
-    const timer = setInterval(async () => {
+    const syncTimer = setInterval(async () => {
       await Promise.all([
         syncLikes(),
         syncUnlikes(),
@@ -32,8 +32,8 @@ export default function PostProvider({ children }) {
       ]);
     }, 1 * 60 * 1000);
 
-    return () => clearInterval(timer);
-  });
+    return () => clearInterval(syncTimer);
+  }, []);
 
   const addPostLike = (id) => {
     if (isPostDisliked(id)?.synced === true) {
