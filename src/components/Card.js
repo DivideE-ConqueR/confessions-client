@@ -29,7 +29,6 @@ export default function Card(props) {
     removePostDislike,
     isPostDisliked,
     isPostReported,
-    addPostReport,
   } = usePost();
 
   const [postLiked, setPostLiked] = useState({ liked: null, synced: null });
