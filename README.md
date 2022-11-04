@@ -1,5 +1,7 @@
 # Confessions
 
+[![Node.js CI](https://github.com/DivideE-ConqueR/confessions-client/actions/workflows/nodejs-ci.yml/badge.svg)](https://github.com/DivideE-ConqueR/confessions-client/actions/workflows/nodejs-ci.yml)
+[![CodeQL](https://github.com/DivideE-ConqueR/confessions-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/DivideE-ConqueR/confessions-client/actions/workflows/codeql.yml)
 
 ### Requirements
 
