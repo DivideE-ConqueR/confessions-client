@@ -49,6 +49,7 @@ export default function PostProvider({ children }) {
     }, 1 * 60 * 1000);
 
     return () => clearInterval(syncTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addPostLike = (id) => {
