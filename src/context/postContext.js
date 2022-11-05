@@ -46,7 +46,8 @@ export default function PostProvider({ children }) {
       syncUndislikes(),
       syncReports(),
     ]);
-  }, 10 * 1000);
+    // 1 minute interval
+  }, 1 * 60 * 1000);
 
   const addPostLike = (id) => {
     if (isPostDisliked(id)?.synced === true) {
