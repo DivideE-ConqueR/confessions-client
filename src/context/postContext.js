@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { getFromLS, setToLS } from "../utils/localStorage";
 import axios from "../api/base";
 
@@ -36,21 +36,6 @@ export default function PostProvider({ children }) {
   useEffect(() => {
     setToLS("post_reports", postReports);
   }, [postReports]);
-
-  useEffect(() => {
-    const syncTimer = setInterval(async () => {
-      await Promise.all([
-        syncLikes(),
-        syncUnlikes(),
-        syncDislikes(),
-        syncUndislikes(),
-        syncReports(),
-      ]);
-    }, 1 * 60 * 1000);
-
-    return () => clearInterval(syncTimer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const addPostLike = (id) => {
     if (isPostDisliked(id)?.synced === true) {
@@ -116,7 +101,7 @@ export default function PostProvider({ children }) {
     return postReports.find((post) => post.id === id);
   };
 
-  const syncLikes = async () => {
+  const syncLikes = useCallback(async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostLikes = structuredClone(postLikes);
 
@@ -140,9 +125,9 @@ export default function PostProvider({ children }) {
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
-  };
+  }, [postLikes]);
 
-  const syncUnlikes = async () => {
+  const syncUnlikes = useCallback(async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -166,9 +151,9 @@ export default function PostProvider({ children }) {
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
-  };
+  }, [postUnlikes]);
 
-  const syncDislikes = async () => {
+  const syncDislikes = useCallback(async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -192,9 +177,9 @@ export default function PostProvider({ children }) {
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
-  };
+  }, [postDislikes]);
 
-  const syncUndislikes = async () => {
+  const syncUndislikes = useCallback(async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -218,9 +203,9 @@ export default function PostProvider({ children }) {
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
-  };
+  }, [postUndislikes]);
 
-  const syncReports = async () => {
+  const syncReports = useCallback(async () => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostReports = structuredClone(postReports);
 
@@ -244,7 +229,22 @@ export default function PostProvider({ children }) {
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
-  };
+  }, [postReports]);
+
+  useEffect(() => {
+    const syncTimer = setInterval(async () => {
+      await Promise.all([
+        syncLikes(),
+        syncUnlikes(),
+        syncDislikes(),
+        syncUndislikes(),
+        syncReports(),
+      ]);
+    }, 1 * 10 * 1000);
+
+    return () => clearInterval(syncTimer);
+    // eslint-disable-next-line no-use-before-define
+  }, [syncDislikes, syncLikes, syncReports, syncUndislikes, syncUnlikes]);
 
   return (
     <PostContext.Provider
