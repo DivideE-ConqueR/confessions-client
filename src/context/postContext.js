@@ -4,6 +4,7 @@ import { getFromLS, setToLS } from "../utils/localStorage";
 import axios from "../api/base";
 
 export const PostContext = createContext(null);
+PostContext.displayName = "PostContext";
 
 export default function PostProvider({ children }) {
   const _starterPostLikes = getFromLS("post_likes");
