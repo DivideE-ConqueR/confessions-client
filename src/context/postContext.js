@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
+import { useInterval } from "../hooks/useInterval";
 import { getFromLS, setToLS } from "../utils/localStorage";
 import axios from "../api/base";
 
@@ -36,6 +37,16 @@ export default function PostProvider({ children }) {
   useEffect(() => {
     setToLS("post_reports", postReports);
   }, [postReports]);
+
+  useInterval(async () => {
+    await Promise.all([
+      syncLikes(),
+      syncUnlikes(),
+      syncDislikes(),
+      syncUndislikes(),
+      syncReports(),
+    ]);
+  }, 10 * 1000);
 
   const addPostLike = (id) => {
     if (isPostDisliked(id)?.synced === true) {
@@ -230,21 +241,6 @@ export default function PostProvider({ children }) {
       );
     }
   }, [postReports]);
-
-  useEffect(() => {
-    const syncTimer = setInterval(async () => {
-      await Promise.all([
-        syncLikes(),
-        syncUnlikes(),
-        syncDislikes(),
-        syncUndislikes(),
-        syncReports(),
-      ]);
-    }, 1 * 10 * 1000);
-
-    return () => clearInterval(syncTimer);
-    // eslint-disable-next-line no-use-before-define
-  }, [syncDislikes, syncLikes, syncReports, syncUndislikes, syncUnlikes]);
 
   return (
     <PostContext.Provider
