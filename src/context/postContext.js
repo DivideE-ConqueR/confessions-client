@@ -134,7 +134,7 @@ export default function PostProvider({ children }) {
       await axios.post("/likes", { ids });
       setPostLikes(copyPostLikes);
     } catch (error) {
-      console.log(
+      console.error(
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
@@ -160,7 +160,7 @@ export default function PostProvider({ children }) {
       await axios.post("/unlikes", { ids });
       setPostUnlikes(copyPostUnlikes);
     } catch (error) {
-      console.log(
+      console.error(
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
@@ -186,7 +186,7 @@ export default function PostProvider({ children }) {
       await axios.post("/dislikes", { ids });
       setPostDislikes(copyPostDislikes);
     } catch (error) {
-      console.log(
+      console.error(
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
@@ -212,7 +212,7 @@ export default function PostProvider({ children }) {
       await axios.post("/undislikes", { ids });
       setPostUndislikes(copyPostUndislikes);
     } catch (error) {
-      console.log(
+      console.error(
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
@@ -238,7 +238,7 @@ export default function PostProvider({ children }) {
       await axios.post("/reports", { ids });
       setPostReports(copyPostReports);
     } catch (error) {
-      console.log(
+      console.error(
         `${error.code}: ${error.response.status} - ${error.response.data}`
       );
     }
