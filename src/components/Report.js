@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { usePost } from "../hooks/usePost";
 import { ClickAwayListener } from "@mui/material";
+import { usePost } from "../hooks/usePost";
 import { EllipsisHorizontalIcon, FlagIcon } from "@heroicons/react/24/outline";
 import { FlagIcon as FlagSolidIcon } from "@heroicons/react/24/solid";
 
