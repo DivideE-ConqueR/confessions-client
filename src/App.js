@@ -12,7 +12,15 @@ import New from "./pages/new";
 import Post from "./pages/post";
 import Custom404 from "./pages/404";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 1000 * 60 * 2,
+    },
+  },
+});
 
 export default function App() {
   useEffect(() => {
