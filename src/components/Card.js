@@ -17,7 +17,7 @@ import {
   HandThumbDownIcon as HandThumbDownSolidIcon,
 } from "@heroicons/react/24/solid";
 
-export default function Card(props) {
+export default function Card({ post }) {
   const generator = new AvatarGenerator();
 
   const navigate = useNavigate();
@@ -42,9 +42,9 @@ export default function Card(props) {
   });
 
   useEffect(() => {
-    const likedRes = isPostLiked(props.id);
-    const dislikedRes = isPostDisliked(props.id);
-    const reportedRes = isPostReported(props.id);
+    const likedRes = isPostLiked(post._id);
+    const dislikedRes = isPostDisliked(post._id);
+    const reportedRes = isPostReported(post._id);
     likedRes
       ? setPostLiked({ liked: likedRes.liked, synced: likedRes.synced })
       : setPostLiked({ liked: false, synced: null });
@@ -60,24 +60,24 @@ export default function Card(props) {
           synced: reportedRes.synced,
         })
       : setPostReported({ reported: false, synced: null });
-  }, [isPostLiked, isPostDisliked, isPostReported, props.id]);
+  }, [isPostLiked, isPostDisliked, isPostReported, post._id]);
 
   const handlePostLike = () => {
     if (postLiked.liked !== true) {
-      addPostLike(props.id);
+      addPostLike(post._id);
       setPostLiked({ liked: true, synced: false });
     } else {
-      removePostLike(props.id);
+      removePostLike(post._id);
       setPostLiked({ liked: false, synced: null });
     }
   };
 
   const handlePostDislike = () => {
     if (postDisliked.disliked !== true) {
-      addPostDislike(props.id);
+      addPostDislike(post._id);
       setPostDisliked({ disliked: true, synced: false });
     } else {
-      removePostDislike(props.id);
+      removePostDislike(post._id);
       setPostDisliked({ disliked: false, synced: null });
     }
   };
@@ -90,7 +90,7 @@ export default function Card(props) {
             <div className="flex items-center space-x-2">
               <img
                 className="w-8"
-                src={generator.generateRandomAvatar(props.name)}
+                src={generator.generateRandomAvatar(post.name)}
                 loading="lazy"
                 alt="avatar"
               />
@@ -98,18 +98,18 @@ export default function Card(props) {
                 className="font-semibold text-base dot__seperator"
                 data-after-content="·"
               >
-                {props.name}
+                {post.name}
               </h2>
               <p className="text-gray-400/70">
                 <ReactTimeAgo
-                  date={new Date(props.createdAt).getTime()}
+                  date={new Date(post.createdAt).getTime()}
                   locale="en-IN"
                   timeStyle="mini-minute-now"
                 />
               </p>
             </div>
             <Report
-              id={props.id}
+              _id={post._id}
               postReported={postReported}
               setPostReported={setPostReported}
             />
@@ -120,7 +120,7 @@ export default function Card(props) {
                 <span className="text-blue-500 ">{hashtagValue}</span>
               )}
             >
-              {props.postBody}
+              {post.body}
             </ReactHashtag>
           </p>
         </div>
@@ -136,7 +136,9 @@ export default function Card(props) {
               <HandThumbUpIcon className="w-5" />
             )}
             <span className="select-none">
-              {postLiked.synced === false ? props.likes + 1 : props.likes}
+              {postLiked.synced === false
+                ? post.count.likes + 1
+                : post.count.likes}
             </span>
           </div>
           <div
@@ -150,20 +152,20 @@ export default function Card(props) {
             )}
             <span className="select-none">
               {postDisliked.synced === false
-                ? props.dislikes + 1
-                : props.dislikes}
+                ? post.count.dislikes + 1
+                : post.count.dislikes}
             </span>
           </div>
           <ChatBubbleOvalLeftEllipsisIcon
             className="w-5 cursor-pointer"
             onClick={() => {
-              navigate(`/posts/${props.id}`);
+              navigate(`/posts/${post._id}`);
             }}
           />
           <RWebShare
             data={{
-              text: `Share - Confessions | ${props.name}`,
-              url: `${window.location.origin}/posts/${props.id}`,
+              text: `Share - Confessions | ${post.name}`,
+              url: `${window.location.origin}/posts/${post._id}`,
               title: "Confessions",
             }}
             onClick={() => console.log("shared successfully!")}
