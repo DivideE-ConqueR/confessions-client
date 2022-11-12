@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { useInterval } from "../hooks/useInterval";
-import { getFromLS, setToLS } from "../utils/localStorage";
+import { getFromLS, setToLS } from "../utils/storage";
 import axios from "../api/base";
 
 export const PostContext = createContext(null);
