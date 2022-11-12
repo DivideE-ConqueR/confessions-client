@@ -135,7 +135,7 @@ export default function PostProvider({ children }) {
       setPostLikes(copyPostLikes);
     } catch (error) {
       console.error(
-        `${error.code}: ${error.response.status} - ${error.response.data}`
+        `${error.code}: ${error.response.status} - ${error.response.data.message}`
       );
     }
   }, [postLikes]);
@@ -161,7 +161,7 @@ export default function PostProvider({ children }) {
       setPostUnlikes(copyPostUnlikes);
     } catch (error) {
       console.error(
-        `${error.code}: ${error.response.status} - ${error.response.data}`
+        `${error.code}: ${error.response.status} - ${error.response.data.message}`
       );
     }
   }, [postUnlikes]);
@@ -187,7 +187,7 @@ export default function PostProvider({ children }) {
       setPostDislikes(copyPostDislikes);
     } catch (error) {
       console.error(
-        `${error.code}: ${error.response.status} - ${error.response.data}`
+        `${error.code}: ${error.response.status} - ${error.response.data.message}`
       );
     }
   }, [postDislikes]);
@@ -213,7 +213,7 @@ export default function PostProvider({ children }) {
       setPostUndislikes(copyPostUndislikes);
     } catch (error) {
       console.error(
-        `${error.code}: ${error.response.status} - ${error.response.data}`
+        `${error.code}: ${error.response.status} - ${error.response.data.message}`
       );
     }
   }, [postUndislikes]);
@@ -239,7 +239,7 @@ export default function PostProvider({ children }) {
       setPostReports(copyPostReports);
     } catch (error) {
       console.error(
-        `${error.code}: ${error.response.status} - ${error.response.data}`
+        `${error.code}: ${error.response.status} - ${error.response.data.message}`
       );
     }
   }, [postReports]);
