@@ -109,7 +109,7 @@ export default function Card({ post }) {
               </p>
             </div>
             <Report
-              _id={post._id}
+              id={post._id}
               postReported={postReported}
               setPostReported={setPostReported}
             />
