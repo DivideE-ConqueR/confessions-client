@@ -63,7 +63,7 @@ export default function Post() {
   } = useQuery({
     queryKey: ["post", id],
     queryFn: () => getPost(id),
-    onError: (error) => handleError(error),
+    onError: handleError,
   });
 
   const {
@@ -73,7 +73,7 @@ export default function Post() {
   } = useQuery({
     queryKey: ["comments", id],
     queryFn: () => getComments(id),
-    onError: (error) => handleError(error),
+    onError: handleError,
   });
 
   useEffect(() => {

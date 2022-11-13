@@ -1,3 +1,3 @@
 export const errorHandler = (error, info) => {
-  console.log({ error, info });
+  console.error({ error, info });
 };
