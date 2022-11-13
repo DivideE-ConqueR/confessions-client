@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getIP } from "./api/services/ip";
@@ -26,6 +26,8 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const location = useLocation();
+
   useEffect(() => {
     getIP().then((ip) => setToSS("ip", ip));
 
@@ -35,8 +37,12 @@ export default function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler}>
+    <ErrorBoundary
+      key={location.pathname}
+      FallbackComponent={ErrorFallback}
+      onError={errorHandler}
+    >
+      <QueryClientProvider client={queryClient}>
         <AlertProvider>
           <PostProvider>
             <Routes>
@@ -47,8 +53,8 @@ export default function App() {
             </Routes>
           </PostProvider>
         </AlertProvider>
-      </ErrorBoundary>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
