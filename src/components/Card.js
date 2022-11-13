@@ -89,7 +89,9 @@ export default function Card({ post }) {
           <div className="flex justify-between items-center mb-3">
             <div className="flex items-center space-x-2">
               <img
-                className="w-8"
+                className="w-8 h-8"
+                width="2rem"
+                height="2rem"
                 src={generator.generateRandomAvatar(post.name)}
                 loading="lazy"
                 alt="avatar"
