@@ -14,6 +14,7 @@
     "random-avatar-generator": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
     "react-hashtag": "^2.1.2",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.3.0",
