@@ -1,7 +1,13 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { useInterval } from "../hooks/useInterval";
 import { getFromLS, setToLS } from "../utils/storage";
-import axios from "../api/base";
+import {
+  syncDislikesAPI,
+  syncLikesAPI,
+  syncReportsAPI,
+  syncUndislikesAPI,
+  syncUnlikesAPI,
+} from "../api/services/sync";
 
 export const PostContext = createContext(null);
 PostContext.displayName = "PostContext";
@@ -114,7 +120,7 @@ export default function PostProvider({ children }) {
     return postReports.find((post) => post.id === id);
   };
 
-  const syncLikes = useCallback(async () => {
+  const syncLikes = useCallback(() => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostLikes = structuredClone(postLikes);
 
@@ -131,7 +137,7 @@ export default function PostProvider({ children }) {
     if (!(ids.length > 0)) return;
 
     try {
-      await axios.post("/likes", { ids });
+      syncLikesAPI(ids);
       setPostLikes(copyPostLikes);
     } catch (error) {
       console.error(
@@ -140,7 +146,7 @@ export default function PostProvider({ children }) {
     }
   }, [postLikes]);
 
-  const syncUnlikes = useCallback(async () => {
+  const syncUnlikes = useCallback(() => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -157,7 +163,7 @@ export default function PostProvider({ children }) {
     if (!(ids.length > 0)) return;
 
     try {
-      await axios.post("/unlikes", { ids });
+      syncUnlikesAPI(ids);
       setPostUnlikes(copyPostUnlikes);
     } catch (error) {
       console.error(
@@ -166,7 +172,7 @@ export default function PostProvider({ children }) {
     }
   }, [postUnlikes]);
 
-  const syncDislikes = useCallback(async () => {
+  const syncDislikes = useCallback(() => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -183,7 +189,7 @@ export default function PostProvider({ children }) {
     if (!(ids.length > 0)) return;
 
     try {
-      await axios.post("/dislikes", { ids });
+      syncDislikesAPI(ids);
       setPostDislikes(copyPostDislikes);
     } catch (error) {
       console.error(
@@ -192,7 +198,7 @@ export default function PostProvider({ children }) {
     }
   }, [postDislikes]);
 
-  const syncUndislikes = useCallback(async () => {
+  const syncUndislikes = useCallback(() => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostUnlikes = structuredClone(postUnlikes);
 
@@ -209,7 +215,7 @@ export default function PostProvider({ children }) {
     if (!(ids.length > 0)) return;
 
     try {
-      await axios.post("/undislikes", { ids });
+      syncUndislikesAPI(ids);
       setPostUndislikes(copyPostUndislikes);
     } catch (error) {
       console.error(
@@ -218,7 +224,7 @@ export default function PostProvider({ children }) {
     }
   }, [postUndislikes]);
 
-  const syncReports = useCallback(async () => {
+  const syncReports = useCallback(() => {
     // ⬇ this is a problem, structuredClone is not supported by all browsers yet...
     // const copyPostReports = structuredClone(postReports);
 
@@ -235,7 +241,7 @@ export default function PostProvider({ children }) {
     if (!(ids.length > 0)) return;
 
     try {
-      await axios.post("/reports", { ids });
+      syncReportsAPI(ids);
       setPostReports(copyPostReports);
     } catch (error) {
       console.error(
