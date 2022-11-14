@@ -23,7 +23,7 @@ export default function AlertProvider({ children }) {
     if (reason === "clickaway") {
       return;
     }
-    setAlertState({ open: false, message: "", severity: "" });
+    setAlertState({ open: false });
   };
 
   return (
