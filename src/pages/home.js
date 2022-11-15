@@ -1,38 +1,41 @@
-import { useEffect, useState } from "react";
-import axios from "../api/base";
+import { useQuery } from "@tanstack/react-query";
+import { useErrorHandler } from "react-error-boundary";
+import { getAllPosts } from "../api/services/post";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const handleError = useErrorHandler();
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get("/posts").then((res) => res.data);
-      setPosts(response);
-    }
-    fetchData();
-  }, []);
+  const {
+    data: posts,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getAllPosts,
+    onError: handleError,
+  });
 
   return (
-    <div>
+    <>
       <Header />
-      <div className="p-4 bg-slate-400/20 flex flex-col space-y-4">
-        {posts.map((post) => (
-          <Card
-            key={post._id}
-            postBody={post.postBody}
-            createdAt={post.createdAt}
-            name={post.name}
-            id={post.postId}
-            likes={post.likes}
-            dislikes={post.dislikes}
-            comments={post.commentsNumber}
-          />
-        ))}
-      </div>
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        !isError && (
+          <main className="p-4 bg-slate-400/20 flex flex-col space-y-4">
+            {posts.data.map((post) => (
+              <Card key={post._id} post={post} />
+            ))}
+          </main>
+        )
+      )}
+
       <Footer />
-    </div>
+    </>
   );
 }

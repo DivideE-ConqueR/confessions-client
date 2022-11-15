@@ -1,72 +1,40 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/base";
+import { useMutation } from "@tanstack/react-query";
+import { createPost } from "../api/services/post";
+import { useAlert } from "../hooks/useAlert";
 import Header from "../components/Header";
 import Input from "../components/Input";
-import CustomAlert from "../components/CustomAlert";
 import Footer from "../components/Footer";
 
 export default function New() {
   const navigate = useNavigate();
+  const { openAlert } = useAlert();
 
   const [postBody, setPostBody] = useState("");
-  const [alertState, setAlertState] = useState({
-    open: false,
-    message: "",
-    severity: "",
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      createPost({
+        body: postBody,
+        tags: [...new Set(postBody.match(/(#+[a-zA-Z0-9(_)]{1,})/gi))],
+      });
+    },
+    onSuccess: () => {
+      openAlert({
+        message: "Post created successfully!",
+        severity: "success",
+      });
+      navigate("/");
+    },
+    onError: (error) => {
+      openAlert({
+        message: "Something went wrong!",
+        severity: "error",
+      });
+      console.error(error.response.data);
+    },
   });
-
-  const handleAlertOpen = (props) => {
-    setAlertState({
-      open: true,
-      message: props.message,
-      severity: props.severity,
-    });
-  };
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertState({ open: false, message: "", severity: "" });
-    navigate("/");
-  };
-
-  const handleClick = async () => {
-    const IPAddress = await axios
-      .get(
-        `https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_API_KEY}`
-      )
-      .then((response) => response.data.IPv4)
-      .catch((err) => {
-        handleAlertOpen({
-          message: "Something went wrong!",
-          severity: "error",
-        });
-        console.log(err);
-      });
-
-    await axios
-      .post("/posts", {
-        postBody: postBody,
-        postTags: [...new Set(postBody.match(/(#+[a-zA-Z0-9(_)]{1,})/gi))],
-        IPAddress: IPAddress,
-      })
-      .then(() => {
-        handleAlertOpen({
-          message: "Post created successfully!",
-          severity: "success",
-        });
-        console.log("posted");
-      })
-      .catch((err) => {
-        handleAlertOpen({
-          message: "Something went wrong!",
-          severity: "error",
-        });
-        console.log(err);
-      });
-  };
 
   return (
     <>
@@ -79,19 +47,13 @@ export default function New() {
         <Input
           value={postBody}
           onChange={setPostBody}
-          onClick={handleClick}
+          onClick={() => mutation.mutate()}
           label="Post"
           placeholder="Your message..."
           rows="10"
         />
       </div>
 
-      <CustomAlert
-        open={alertState.open}
-        handleClose={handleAlertClose}
-        severity={alertState.severity}
-        message={alertState.message}
-      />
       <Footer />
     </>
   );
