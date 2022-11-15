@@ -5,11 +5,17 @@ const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function CustomAlert({ open, message, severity, handleClose }) {
+export default function CustomAlert({
+  open,
+  message,
+  severity,
+  duration = 3000,
+  handleClose,
+}) {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={duration}
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       onClose={handleClose}
     >
