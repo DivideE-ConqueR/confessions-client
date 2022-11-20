@@ -84,12 +84,12 @@ export default function Card({ post }) {
 
   return (
     <>
-      <div className="rounded overflow-hidden shadow-md bg-white">
+      <div className="overflow-hidden rounded bg-white shadow-md">
         <div className="px-6 py-4">
-          <div className="flex justify-between items-center mb-3">
+          <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <img
-                className="w-8 h-8"
+                className="h-8 w-8"
                 width="2rem"
                 height="2rem"
                 src={generator.generateRandomAvatar(post.name)}
@@ -97,7 +97,7 @@ export default function Card({ post }) {
                 alt="avatar"
               />
               <h2
-                className="font-semibold text-base dot__seperator"
+                className="dot__seperator text-base font-semibold"
                 data-after-content="·"
               >
                 {post.name}
@@ -116,7 +116,7 @@ export default function Card({ post }) {
               setPostReported={setPostReported}
             />
           </div>
-          <p className="text-gray-600 text-base whitespace-pre-line">
+          <p className="whitespace-pre-line text-base text-gray-600">
             <ReactHashtag
               renderHashtag={(hashtagValue) => (
                 <span className="text-blue-500 ">{hashtagValue}</span>
@@ -127,9 +127,9 @@ export default function Card({ post }) {
           </p>
         </div>
 
-        <div className="px-6 pt-3 pb-4 flex space-x-8 items-center">
+        <div className="flex items-center space-x-8 px-6 pt-3 pb-4">
           <div
-            className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
+            className="flex cursor-pointer items-center space-x-2 hover:text-blue-500"
             onClick={handlePostLike}
           >
             {postLiked.liked ? (
@@ -144,7 +144,7 @@ export default function Card({ post }) {
             </span>
           </div>
           <div
-            className="flex items-center space-x-2 cursor-pointer hover:text-yellow-500"
+            className="flex cursor-pointer items-center space-x-2 hover:text-yellow-500"
             onClick={handlePostDislike}
           >
             {postDisliked.disliked ? (

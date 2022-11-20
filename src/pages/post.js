@@ -150,10 +150,10 @@ export default function Post() {
         (!isPostError || !isCommentsError) && (
           <>
             <div className="px-6 py-4">
-              <div className="flex justify-between items-center mb-3">
+              <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <img
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     width="2rem"
                     height="2rem"
                     src={generator.generateRandomAvatar(post.data.name)}
@@ -161,7 +161,7 @@ export default function Post() {
                     alt="avatar"
                   />
                   <h2
-                    className="font-semibold text-base dot__seperator"
+                    className="dot__seperator text-base font-semibold"
                     data-after-content="·"
                   >
                     {post.data.name}
@@ -180,7 +180,7 @@ export default function Post() {
                   setPostReported={setPostReported}
                 />
               </div>
-              <p className="text-gray-600 text-xl whitespace-pre-line break-words">
+              <p className="whitespace-pre-line break-words text-xl text-gray-600">
                 <ReactHashtag
                   renderHashtag={(hashtagValue) => (
                     <span className="text-blue-500">{hashtagValue}</span>
@@ -190,9 +190,9 @@ export default function Post() {
                 </ReactHashtag>
               </p>
             </div>
-            <div className="px-6 pt-3 pb-4 flex justify-between items-center">
+            <div className="flex items-center justify-between px-6 pt-3 pb-4">
               <div
-                className="flex items-center space-x-2 cursor-pointer hover:text-blue-500"
+                className="flex cursor-pointer items-center space-x-2 hover:text-blue-500"
                 onClick={handlePostLike}
               >
                 {postLiked.liked ? (
@@ -207,7 +207,7 @@ export default function Post() {
                 </span>
               </div>
               <div
-                className="flex items-center space-x-2 cursor-pointer hover:text-yellow-500"
+                className="flex cursor-pointer items-center space-x-2 hover:text-yellow-500"
                 onClick={handlePostDislike}
               >
                 {postDisliked.disliked ? (
@@ -233,7 +233,7 @@ export default function Post() {
                 <ShareIcon className="w-5 cursor-pointer" />
               </RWebShare>
             </div>
-            <div className="p-3 mb-2 space-y-4">
+            <div className="mb-2 space-y-4 p-3">
               <Input
                 value={commentBody}
                 onChange={setCommentBody}
@@ -246,14 +246,14 @@ export default function Post() {
 
             <div
               data-before-content="All Comments"
-              className="p-6 flex flex-col space-y-3 divide-y-2 before:content-[attr(data-before-content)] before:text-lg before:font-semibold before:mb-2 before:pb-2 before:border-b-2 before:border-gray-300"
+              className="flex flex-col space-y-3 divide-y-2 p-6 before:mb-2 before:border-b-2 before:border-gray-300 before:pb-2 before:text-lg before:font-semibold before:content-[attr(data-before-content)]"
             >
               {comments.data.length > 0 ? (
                 comments.data.map((comment) => (
                   <Comment key={comment._id} comment={comment} />
                 ))
               ) : (
-                <div className="h-40 flex flex-col items-center justify-center space-y-4">
+                <div className="flex h-40 flex-col items-center justify-center space-y-4">
                   <ChatBubbleLeftRightIcon className="w-8 text-red-400" />
                   <p className="font-[500] text-gray-700">No Comments Yet!</p>
                   <p className="text-gray-600">

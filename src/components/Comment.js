@@ -6,7 +6,7 @@ export default function Comment({ comment }) {
   const generator = new AvatarGenerator();
 
   return (
-    <div className="pt-4 pb-2 flex space-x-4 items-start">
+    <div className="flex items-start space-x-4 pt-4 pb-2">
       <img
         className="h-10 w-10"
         src={generator.generateRandomAvatar(comment.name)}
@@ -19,7 +19,7 @@ export default function Comment({ comment }) {
         <div className="flex space-x-2">
           <h2
             data-after-content="·"
-            className="font-semibold text-base dot__seperator"
+            className="dot__seperator text-base font-semibold"
           >
             {comment.name}
           </h2>

@@ -3,19 +3,19 @@ import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 p-4 flex justify-between items-center bg-white/50 backdrop-blur">
+    <header className="sticky top-0 flex items-center justify-between bg-white/50 p-4 backdrop-blur">
       <Link to="/">
-        <p className="text-2xl font-dynaPuff font-medium select-none">
+        <p className="select-none font-dynaPuff text-2xl font-medium">
           Confessions
         </p>
       </Link>
       <div className="flex items-center space-x-6">
         <Link to="/new">
-          <PlusIcon className="w-6 h-6 cursor-pointer" />
+          <PlusIcon className="h-6 w-6 cursor-pointer" />
         </Link>
-        <div className="bg-slate-400/20 hover:bg-slate-400/30 p-2 rounded-full cursor-pointer">
+        <div className="cursor-pointer rounded-full bg-slate-400/20 p-2 hover:bg-slate-400/30">
           <Link to="/search">
-            <MagnifyingGlassIcon className="w-6 h-6" />
+            <MagnifyingGlassIcon className="h-6 w-6" />
           </Link>
         </div>
       </div>
