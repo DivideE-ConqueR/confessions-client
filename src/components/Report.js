@@ -21,7 +21,7 @@ export default function Report({ id, postReported, setPostReported }) {
       <div className="relative">
         <button
           type="button"
-          className="focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 rounded-full transition ease-in-out duration-150"
+          className="rounded-full transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
           onClick={() => setOpen((prev) => !prev)}
           id="menu-button"
           aria-expanded="true"
@@ -41,7 +41,7 @@ export default function Report({ id, postReported, setPostReported }) {
           <div className="py-1" role="none">
             <button
               type="submit"
-              className="w-full px-4 py-2 flex space-x-3 text-sm text-gray-700 hover:bg-red-500 group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group flex w-full space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
               onClick={handlePostReport}
               role="menuitem"
               tabIndex="-1"

@@ -7,8 +7,8 @@ export default function Custom404() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center h-48 space-y-1">
-        <p className="font-sourceCodePro font-semibold text-9xl tracking-wider sm:tracking-widest">
+      <div className="flex h-48 flex-col items-center justify-center space-y-1">
+        <p className="font-sourceCodePro text-9xl font-semibold tracking-wider sm:tracking-widest">
           404
         </p>
         <p className="font-medium">Didn&apos;t find anything here!</p>
