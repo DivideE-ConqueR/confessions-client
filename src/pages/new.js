@@ -40,8 +40,8 @@ export default function New() {
     <>
       <Header />
 
-      <div className="p-4 space-y-6">
-        <h1 className="font-medium text-center">
+      <div className="space-y-6 p-4">
+        <h1 className="text-center font-medium">
           Share your secret with the world
         </h1>
         <Input

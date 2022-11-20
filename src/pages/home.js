@@ -27,7 +27,7 @@ export default function Home() {
         <Loader />
       ) : (
         !isError && (
-          <main className="p-4 bg-slate-400/20 flex flex-col space-y-4">
+          <main className="flex flex-col space-y-4 bg-slate-400/20 p-4">
             {posts.data.map((post) => (
               <Card key={post._id} post={post} />
             ))}
