@@ -12,6 +12,7 @@ import AlertProvider from "./context/alertContext";
 import Home from "./pages/home";
 import New from "./pages/new";
 import Post from "./pages/post";
+import Search from "./pages/search";
 import Custom404 from "./pages/404";
 import ErrorFallback from "./components/ErrorFallback";
 
@@ -47,6 +48,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="new" element={<New />} />
               <Route path="posts/:id" element={<Post />} />
+              <Route path="search" element={<Search />} />
               <Route path="*" element={<Custom404 />} />
             </Routes>
           </PostProvider>
