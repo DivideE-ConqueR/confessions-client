@@ -6,7 +6,7 @@ import { getIP } from "./api/services/ip";
 import { getFromLS, setToLS, setToSS } from "./utils/storage";
 import { ErrorBoundary } from "react-error-boundary";
 import { errorHandler } from "./utils/error";
-import nanoid from "./config/nanoid";
+import nanoid from "./lib/nanoid";
 import PostProvider from "./context/postContext";
 import AlertProvider from "./context/alertContext";
 import Home from "./pages/home";
