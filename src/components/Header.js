@@ -14,7 +14,9 @@ export default function Header() {
           <PlusIcon className="h-6 w-6 cursor-pointer" />
         </Link>
         <div className="cursor-pointer rounded-full bg-slate-400/20 p-2 hover:bg-slate-400/30">
-          <MagnifyingGlassIcon className="h-6 w-6" />
+          <Link to="/search">
+            <MagnifyingGlassIcon className="h-6 w-6" />
+          </Link>
         </div>
       </div>
     </header>
