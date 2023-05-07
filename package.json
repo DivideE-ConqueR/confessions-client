@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "vite",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "build:vite": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --check ./src",
     "prepare": "husky install"
   },
@@ -29,30 +30,26 @@
     "react-hashtag": "^2.1.2",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-time-ago": "^7.2.1",
-    "react-web-share": "^2.0.2",
-    "web-vitals": "^2.1.4"
+    "react-web-share": "^2.0.2"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.18.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
+    "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.8",
+    "eslint": "^8.40.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "postcss": "^8.4.16",
     "preact": "^10.11.2",
     "prettier": "^2.8.0",
     "prettier-plugin-tailwindcss": "^0.2.0",
-    "tailwindcss": "^3.2.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.3.5"
   },
   "browserslist": {
     "production": [
