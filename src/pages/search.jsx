@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { getSearchResults } from "../api/services/search";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  ExclamationTriangleIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 import Card from "../components/Card";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = await getSearchResults(searchQuery).then((res) => res.data);
     setSearchResults(data);
+    setLoading(false);
   };
 
   return (
@@ -48,11 +55,20 @@ export default function Search() {
         </div>
       </form>
 
-      <div className="mt-6">
-        {searchResults.map((post) => (
-          <Card key={post._id} post={post} />
-        ))}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="mt-6">
+          {searchResults.length > 0 ? (
+            searchResults.map((post) => <Card key={post._id} post={post} />)
+          ) : (
+            <div className="flex h-40 flex-col items-center justify-center space-y-4">
+              <ExclamationTriangleIcon className="w-8 text-red-400" />
+              <p className="font-[500] text-gray-700">No results!</p>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
