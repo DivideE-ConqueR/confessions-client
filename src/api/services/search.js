@@ -1,7 +1,7 @@
 import axios from "../axios";
 
-const getSearchResults = (parem) => {
-  return axios.get(`/search/?q=${parem}`).then((res) => res.data);
+const getSearchResults = async (query) => {
+  return await axios.get(`/search/?q=${query}`).then((res) => res.data);
 };
 
 export { getSearchResults };
