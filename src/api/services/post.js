@@ -5,6 +5,10 @@ const getAllPosts = () => {
   return axios.get("/posts").then((res) => res.data);
 };
 
+const getTrendingPosts = () => {
+  return axios.get("/posts?sort=engagement").then((res) => res.data);
+};
+
 const getPost = (id) => {
   return axios.get(`/posts/${id}`).then((res) => res.data);
 };
@@ -19,4 +23,4 @@ const createPost = (data) => {
     .then((res) => res.data);
 };
 
-export { getAllPosts, getPost, createPost };
+export { getAllPosts, getTrendingPosts, getPost, createPost };

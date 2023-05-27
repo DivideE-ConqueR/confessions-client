@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AvatarGenerator } from "random-avatar-generator";
 import ReactTimeAgo from "react-time-ago";
-import ReactHashtag from "react-hashtag";
+import { Linkify, LinkifyCore } from "react-easy-linkify";
 import { RWebShare } from "react-web-share";
 import { useErrorHandler } from "react-error-boundary";
 import { getPost } from "../api/services/post";
@@ -27,6 +27,9 @@ import {
   HandThumbUpIcon as HandThumbUpSolidIcon,
   HandThumbDownIcon as HandThumbDownSolidIcon,
 } from "@heroicons/react/24/solid";
+
+LinkifyCore.PluginManager.enableMention();
+LinkifyCore.PluginManager.enableHashtag();
 
 export default function Post() {
   const generator = new AvatarGenerator();
@@ -181,13 +184,32 @@ export default function Post() {
                 />
               </div>
               <p className="whitespace-pre-line break-words text-xl text-gray-600">
-                <ReactHashtag
-                  renderHashtag={(hashtagValue) => (
-                    <span className="text-blue-500">{hashtagValue}</span>
-                  )}
+                <Linkify
+                  options={{
+                    className: "text-blue-500",
+                    defaultProtocol: "https",
+                    linkWrapper: {
+                      mention: (props) => (
+                        // Use 'Link' tag instead of 'span' tag
+                        <span aria-label="mention" {...props}>
+                          {props.children}
+                        </span>
+                      ),
+                      hashtag: (props) => (
+                        // Use 'Link' tag instead of 'span' tag
+                        <span aria-label="hashtag" {...props}>
+                          {props.children}
+                        </span>
+                      ),
+                    },
+                    formatHref: {
+                      mention: (href) => `/user${href}`,
+                      hashtag: (href) => `/tag/${href.substring(1)}`,
+                    },
+                  }}
                 >
                   {post.data.body}
-                </ReactHashtag>
+                </Linkify>
               </p>
             </div>
             <div className="flex items-center justify-between px-6 pt-3 pb-4">

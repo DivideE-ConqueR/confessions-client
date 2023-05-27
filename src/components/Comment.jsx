@@ -1,6 +1,9 @@
 import { AvatarGenerator } from "random-avatar-generator";
-import ReactHashtag from "react-hashtag";
+import { Linkify, LinkifyCore } from "react-easy-linkify";
 import ReactTimeAgo from "react-time-ago";
+
+LinkifyCore.PluginManager.enableMention();
+LinkifyCore.PluginManager.enableHashtag();
 
 export default function Comment({ comment }) {
   const generator = new AvatarGenerator();
@@ -32,13 +35,32 @@ export default function Comment({ comment }) {
           </p>
         </div>
         <p className="w-[75vw] whitespace-pre-wrap break-words">
-          <ReactHashtag
-            renderHashtag={(hashtagValue) => (
-              <span className="text-blue-500">{hashtagValue}</span>
-            )}
+          <Linkify
+            options={{
+              className: "text-blue-500",
+              defaultProtocol: "https",
+              linkWrapper: {
+                mention: (props) => (
+                  // Use 'Link' tag instead of 'span' tag
+                  <span aria-label="mention" {...props}>
+                    {props.children}
+                  </span>
+                ),
+                hashtag: (props) => (
+                  // Use 'Link' tag instead of 'span' tag
+                  <span aria-label="hashtag" {...props}>
+                    {props.children}
+                  </span>
+                ),
+              },
+              formatHref: {
+                mention: (href) => `/user${href}`,
+                hashtag: (href) => `/tag/${href.substring(1)}`,
+              },
+            }}
           >
             {comment.body}
-          </ReactHashtag>
+          </Linkify>
         </p>
       </div>
     </div>

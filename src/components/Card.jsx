@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RWebShare } from "react-web-share";
-import ReactHashtag from "react-hashtag";
+import { Linkify, LinkifyCore } from "react-easy-linkify";
 import ReactTimeAgo from "react-time-ago";
 import { AvatarGenerator } from "random-avatar-generator";
 import { usePost } from "../hooks/usePost";
@@ -16,6 +16,9 @@ import {
   HandThumbUpIcon as HandThumbUpSolidIcon,
   HandThumbDownIcon as HandThumbDownSolidIcon,
 } from "@heroicons/react/24/solid";
+
+LinkifyCore.PluginManager.enableMention();
+LinkifyCore.PluginManager.enableHashtag();
 
 export default function Card({ post }) {
   const generator = new AvatarGenerator();
@@ -117,13 +120,32 @@ export default function Card({ post }) {
             />
           </div>
           <p className="whitespace-pre-line text-base text-gray-600">
-            <ReactHashtag
-              renderHashtag={(hashtagValue) => (
-                <span className="text-blue-500 ">{hashtagValue}</span>
-              )}
+            <Linkify
+              options={{
+                className: "text-blue-500",
+                defaultProtocol: "https",
+                linkWrapper: {
+                  mention: (props) => (
+                    // Use 'Link' tag instead of 'span' tag
+                    <span aria-label="mention" {...props}>
+                      {props.children}
+                    </span>
+                  ),
+                  hashtag: (props) => (
+                    // Use 'Link' tag instead of 'span' tag
+                    <span aria-label="hashtag" {...props}>
+                      {props.children}
+                    </span>
+                  ),
+                },
+                formatHref: {
+                  mention: (href) => `/user${href}`,
+                  hashtag: (href) => `/tag/${href.substring(1)}`,
+                },
+              }}
             >
               {post.body}
-            </ReactHashtag>
+            </Linkify>
           </p>
         </div>
 
